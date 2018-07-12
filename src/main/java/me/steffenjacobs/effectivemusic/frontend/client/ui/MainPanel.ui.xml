@@ -1,0 +1,42 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:t="urn:import:me.steffenjacobs.effectivemusic.frontend.client.ui"
+	xmlns:c="urn:import:me.steffenjacobs.effectivemusic.frontend.client.ui.component">
+	<!-- import for i18n messages -->
+	<ui:with type="me.steffenjacobs.effectivemusic.frontend.client.resource.Messages" field="messages" />
+	<!-- import for resources bundle -->
+	<ui:with type="me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources"
+		field="res" />
+
+
+	<g:DockLayoutPanel>
+		<!-- Top panel -->
+		<g:north size="250">
+			<g:HTMLPanel>
+				<h1>
+					<g:InlineLabel text="{messages.titleMessage}" />
+				</h1>
+				<!-- main toolbox -->
+				<g:FlowPanel styleName="{res.style.todoPanel}">
+					<g:TextBox text="{messages.textboxPlaceholder}" ui:field="textBox" />
+					<g:Button styleName="{res.style.sendButton}"
+						text="{messages.stopButton}" ui:field="stopButton" />
+						<g:Button styleName="{res.style.sendButton}"
+						text="{messages.startButton}" ui:field="startPauseButton" />
+						<g:Button styleName="{res.style.sendButton}"
+						text="{messages.previousButton}" ui:field="previousButton" />
+						<g:Button styleName="{res.style.sendButton}"
+						text="{messages.nextButton}" ui:field="nextButton" />
+				</g:FlowPanel>
+			</g:HTMLPanel>
+		</g:north>
+
+		<g:center>
+			<g:ScrollPanel>
+				<g:FlowPanel ui:field="todoPanel">
+				</g:FlowPanel>
+			</g:ScrollPanel>
+		</g:center>
+
+	</g:DockLayoutPanel>
+</ui:UiBinder> 

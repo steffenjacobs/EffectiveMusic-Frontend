@@ -1,0 +1,10 @@
+.idea
+*.iml
+target/
+bin/
+.project
+.settings/
+.classpath
+*.log
+/gwt-unitCache/
+/war/
