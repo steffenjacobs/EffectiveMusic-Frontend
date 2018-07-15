@@ -27,6 +27,9 @@
 						text="{messages.previousButton}" ui:field="previousButton" />
 						<g:Button styleName="{res.style.sendButton}"
 						text="{messages.nextButton}" ui:field="nextButton" />
+					<g:Label ui:field="playTitle" />
+					<g:Label ui:field="playTime" />
+					<g:Label ui:field="playVolume" />
 				</g:FlowPanel>
 			</g:HTMLPanel>
 		</g:north>

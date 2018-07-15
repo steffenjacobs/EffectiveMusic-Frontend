@@ -17,6 +17,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.PreviousEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.ResumeMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StartMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StopMusicEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshTrackInformationEvent;
 
 public class WebAppController {
 
@@ -47,6 +48,7 @@ public class WebAppController {
 		eventBus.addHandler(ResumeMusicEvent.TYPE, (event) -> sendRequest("http://localhost:8080/music/resume", true, event.getCallback()));
 		eventBus.addHandler(PreviousEvent.TYPE, () -> sendRequest("http://localhost:8080/music/playlist/previous", true));
 		eventBus.addHandler(NextEvent.TYPE, () -> sendRequest("http://localhost:8080/music/playlist/next", true));
+		eventBus.addHandler(RefreshTrackInformationEvent.TYPE, event -> sendRequest("http://localhost:8080/music/live_info", false, event.getCallback()));
 	}
 
 	private void sendRequest(String uri, boolean post) {
