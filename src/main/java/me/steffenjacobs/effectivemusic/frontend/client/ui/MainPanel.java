@@ -1,7 +1,6 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsonUtils;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.http.client.Request;
@@ -13,7 +12,6 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -62,9 +60,6 @@ public class MainPanel extends Composite {
 	TextBox textBox;
 
 	@UiField
-	FlowPanel todoPanel;
-
-	@UiField
 	Label playTime;
 
 	@UiField
@@ -85,7 +80,7 @@ public class MainPanel extends Composite {
 			eventBus.fireEvent(new RefreshTrackInformationEvent(new DefaultRequestCallback() {
 
 				private void clearTextFields() {
-					playTitle.setText("");
+					playTitle.setText("No Track");
 					playTime.setText("");
 					playVolume.setText("");
 				}
@@ -115,8 +110,11 @@ public class MainPanel extends Composite {
 							clearTextFields();
 							return;
 						}
-						// playTitle.setText(dto.getTitle() + " - " +
-						// dto.getArtist());
+						if (dto.getTitle() == null) {
+							playTitle.setText("No Track");
+						} else {
+							playTitle.setText(dto.getTitle() + " - " + dto.getArtist());
+						}
 						playTime.setText(formatPosition(dto.getPosition(), dto.getLength()) + " - " + formatTime(dto.getLength()));
 						playVolume.setText("Volume: " + dto.getVolume() + "%");
 					}

@@ -3,11 +3,22 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:t="urn:import:me.steffenjacobs.effectivemusic.frontend.client.ui"
 	xmlns:c="urn:import:me.steffenjacobs.effectivemusic.frontend.client.ui.component">
 	<!-- import for i18n messages -->
-	<ui:with type="me.steffenjacobs.effectivemusic.frontend.client.resource.Messages" field="messages" />
+	<ui:with
+		type="me.steffenjacobs.effectivemusic.frontend.client.resource.Messages"
+		field="messages" />
 	<!-- import for resources bundle -->
-	<ui:with type="me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources"
+	<ui:with
+		type="me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources"
 		field="res" />
 
+	<ui:style>
+	.inline {
+		margin-right: 10px;
+		display: inline-block;
+		font-size: 18px;
+		vertical-align: middle;
+	}
+	</ui:style>
 
 	<g:DockLayoutPanel>
 		<!-- Top panel -->
@@ -17,20 +28,28 @@
 					<g:InlineLabel text="{messages.titleMessage}" />
 				</h1>
 				<!-- main toolbox -->
-				<g:FlowPanel styleName="{res.style.todoPanel}">
+				<div class="{res.style.todoPanel}">
 					<g:TextBox ui:field="textBox" />
-					<g:Button styleName="{res.style.sendButton}"
-						text="{messages.stopButton}" ui:field="stopButton" />
-						<g:Button styleName="{res.style.sendButton}"
-						text="{messages.startButton}" ui:field="startPauseButton" />
-						<g:Button styleName="{res.style.sendButton}"
-						text="{messages.previousButton}" ui:field="previousButton" />
-						<g:Button styleName="{res.style.sendButton}"
-						text="{messages.nextButton}" ui:field="nextButton" />
-					<g:Label ui:field="playTitle" />
-					<g:Label ui:field="playTime" />
-					<g:Label ui:field="playVolume" />
-				</g:FlowPanel>
+					<g:Button styleName="{res.style.sendButton}" text="{messages.stopButton}"
+						ui:field="stopButton" />
+					<g:Button styleName="{res.style.sendButton}" text="{messages.startButton}"
+						ui:field="startPauseButton" />
+					<g:Button styleName="{res.style.sendButton}" text="{messages.previousButton}"
+						ui:field="previousButton" />
+					<g:Button styleName="{res.style.sendButton}" text="{messages.nextButton}"
+						ui:field="nextButton" />
+					<div class="{style.inline}">
+						<div class="{style.inline}">
+							<g:Label ui:field="playTitle" />
+						</div>
+						<div class="{style.inline}">
+							<g:Label ui:field="playTime" />
+						</div>
+						<div class="{style.inline}">
+							<g:Label ui:field="playVolume" />
+						</div>
+					</div>
+				</div>
 			</g:HTMLPanel>
 		</g:north>
 
