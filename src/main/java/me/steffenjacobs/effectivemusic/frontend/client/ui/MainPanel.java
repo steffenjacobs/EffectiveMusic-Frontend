@@ -15,6 +15,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
+import me.steffenjacobs.effectivemusic.frontend.client.controller.Base64Encoder;
 import me.steffenjacobs.effectivemusic.frontend.client.event.NextEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.PauseMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.PreviousEvent;
@@ -98,7 +99,7 @@ public class MainPanel extends Composite {
 				}
 			}));
 		} else {
-			eventBus.fireEvent(new StartMusicEvent(textBox.getText(), new DefaultRequestCallback() {
+			eventBus.fireEvent(new StartMusicEvent(new String(Base64Encoder.encode(textBox.getText().getBytes())), new DefaultRequestCallback() {
 				@Override
 				public void onResponseReceived(Request request, Response response) {
 					setPlaying(true);

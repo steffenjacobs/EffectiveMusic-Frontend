@@ -42,7 +42,7 @@ public class WebAppController {
 
 	public void bindHandlers() {
 		eventBus.addHandler(StopMusicEvent.TYPE, (event) -> sendRequest("http://localhost:8080/music/stop", true, event.getCallback()));
-		eventBus.addHandler(StartMusicEvent.TYPE, (event) -> sendRequest("http://localhost:8080/music/play?path=" + URL.encode(event.getPath()), true, event.getCallback()));
+		eventBus.addHandler(StartMusicEvent.TYPE, (event) -> sendRequest("http://localhost:8080/music/play?path=" + event.getPath(), true, event.getCallback()));
 		eventBus.addHandler(PauseMusicEvent.TYPE, (event) -> sendRequest("http://localhost:8080/music/pause", true, event.getCallback()));
 		eventBus.addHandler(ResumeMusicEvent.TYPE, (event) -> sendRequest("http://localhost:8080/music/resume", true, event.getCallback()));
 		eventBus.addHandler(PreviousEvent.TYPE, () -> sendRequest("http://localhost:8080/music/playlist/previous", true));
@@ -55,7 +55,7 @@ public class WebAppController {
 
 	private void sendRequest(String uri, boolean post, RequestCallback callback) {
 		String pageBaseUrl = GWT.getHostPageBaseURL();
-		RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, pageBaseUrl + "/rest/" + (post ? "post" : "get") + "?uri=" + URL.encode(uri));
+		RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, pageBaseUrl + "/rest/" + (post ? "post" : "get") + "?uri=" + URL.encode(uri).replace("&", "%26"));
 		builder.setHeader("Content-type", "application/x-www-form-urlencoded");
 		if (callback == null) {
 
