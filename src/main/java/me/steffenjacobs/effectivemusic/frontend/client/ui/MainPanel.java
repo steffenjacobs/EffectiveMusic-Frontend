@@ -65,6 +65,7 @@ public class MainPanel extends Composite {
 		eventBus = evtBus;
 		// init display
 		initWidget(uiBinder.createAndBindUi(this));
+		textBox.getElement().setPropertyString("placeholder", msg.textboxPlaceholder());
 	}
 
 	@UiHandler("stopButton")
