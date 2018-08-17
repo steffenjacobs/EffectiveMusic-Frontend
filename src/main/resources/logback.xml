@@ -8,8 +8,8 @@
 		<append>false</append>
 
 		<encoder>
-			<!-- only log 2 lines of stack trace per cause of an exception -->
-			<pattern>%d{YYYY-MM-dd HH:mm:ss,SSS} [%thread] %-5level %logger{36} - %m %throwable{2}%n</pattern>
+			<!-- only log 6 lines of stack trace per cause of an exception -->
+			<pattern>%d{YYYY-MM-dd HH:mm:ss,SSS} [%thread] %-5level %logger{36} - %m %throwable{6}%n</pattern>
 		</encoder>
 	</appender>
 

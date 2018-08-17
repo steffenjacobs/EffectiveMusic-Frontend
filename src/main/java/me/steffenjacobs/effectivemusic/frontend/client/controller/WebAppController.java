@@ -17,6 +17,8 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.PreviousEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.ResumeMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StartMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StopMusicEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.TrackPositionChangeEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.VolumeChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshTrackInformationEvent;
 
 public class WebAppController {
@@ -30,8 +32,6 @@ public class WebAppController {
 
 		public void onResponseReceived(Request request, Response response) {
 			if (200 == response.getStatusCode()) {
-				String text = response.getText();
-				Window.alert("response = " + text);
 			}
 		}
 	};
@@ -49,6 +49,9 @@ public class WebAppController {
 		eventBus.addHandler(PreviousEvent.TYPE, () -> sendRequest("http://localhost:8080/music/playlist/previous", true));
 		eventBus.addHandler(NextEvent.TYPE, () -> sendRequest("http://localhost:8080/music/playlist/next", true));
 		eventBus.addHandler(RefreshTrackInformationEvent.TYPE, event -> sendRequest("http://localhost:8080/music/live_info", false, event.getCallback()));
+		eventBus.addHandler(TrackPositionChangeEvent.TYPE,
+				event -> sendRequest("http://localhost:8080/music/position?position=" + event.getPosition() / 100, true, event.getCallback()));
+		eventBus.addHandler(VolumeChangeEvent.TYPE, event -> sendRequest("http://localhost:8080/music/gain?gain=" + event.getVolume(), true, event.getCallback()));
 	}
 
 	private void sendRequest(String uri, boolean post) {

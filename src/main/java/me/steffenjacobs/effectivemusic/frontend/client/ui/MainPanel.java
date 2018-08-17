@@ -1,6 +1,7 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.http.client.Request;
@@ -27,9 +28,13 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.PreviousEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.ResumeMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StartMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StopMusicEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.TrackPositionChangeEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.VolumeChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshTrackInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.resource.Messages;
 import me.steffenjacobs.effectivemusic.frontend.client.resource.MusicTemplates;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SimpleSlider;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SliderEventHandler;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDto;
 
 public class MainPanel extends Composite {
@@ -67,6 +72,12 @@ public class MainPanel extends Composite {
 
 	@UiField
 	Label playVolume;
+
+	@UiField
+	SimpleSlider sliderVolumeUi;
+
+	@UiField
+	SimpleSlider sliderTrackUi;
 
 	private SimpleEventBus eventBus;
 
@@ -117,6 +128,8 @@ public class MainPanel extends Composite {
 						}
 						playTime.setText(formatPosition(dto.getPosition(), dto.getLength()) + " - " + formatTime(dto.getLength()));
 						playVolume.setText("Volume: " + dto.getVolume() + "%");
+						sliderVolumeUi.setPosition(dto.getVolume());
+						sliderTrackUi.setPosition(dto.getPosition() * 100);
 					}
 				}
 			}));
@@ -132,12 +145,53 @@ public class MainPanel extends Composite {
 		t.scheduleRepeating(1000);
 	}
 
+	private void setupVolumeListener() {
+		sliderVolumeUi.addEventHandler(new SliderEventHandler() {
+			@Override
+			public void onClick(NativeEvent event) {
+				eventBus.fireEvent(new VolumeChangeEvent(sliderVolumeUi.getPosition(), null));
+			}
+
+			@Override
+			public void onDrag(NativeEvent event) {
+				eventBus.fireEvent(new VolumeChangeEvent(sliderVolumeUi.getPosition(), null));
+			}
+
+			@Override
+			public void onDragEnd(NativeEvent event) {
+				eventBus.fireEvent(new VolumeChangeEvent(sliderVolumeUi.getPosition(), null));
+			}
+		});
+	}
+
+	private void setupTrackListener() {
+		sliderTrackUi.addEventHandler(new SliderEventHandler() {
+			@Override
+			public void onClick(NativeEvent event) {
+				eventBus.fireEvent(new TrackPositionChangeEvent(sliderTrackUi.getPosition(), null));
+			}
+
+			@Override
+			public void onDrag(NativeEvent event) {
+				eventBus.fireEvent(new TrackPositionChangeEvent(sliderTrackUi.getPosition(), null));
+			}
+
+			@Override
+			public void onDragEnd(NativeEvent event) {
+				eventBus.fireEvent(new TrackPositionChangeEvent(sliderTrackUi.getPosition(), null));
+			}
+		});
+
+	}
+
 	@Inject
 	public MainPanel(SimpleEventBus evtBus) {
 		eventBus = evtBus;
 		// init display
 		initWidget(uiBinder.createAndBindUi(this));
 		textBox.getElement().setPropertyString("placeholder", msg.textboxPlaceholder());
+		setupTrackListener();
+		setupVolumeListener();
 		startAutoUpdate();
 	}
 

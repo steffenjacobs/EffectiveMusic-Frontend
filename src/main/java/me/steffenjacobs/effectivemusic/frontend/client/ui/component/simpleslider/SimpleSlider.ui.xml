@@ -1,0 +1,31 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	.important {
+		font-weight: bold;
+	}
+	
+	.inline {
+		display: inline-block;
+	}
+	
+	.left {
+		background-color: #88b4fc;
+		height: 15px;
+		border-right: 1px solid #262c35;
+		max-width: 150px;
+	}
+	
+	.box {
+		border: 1px solid #4f5c70;
+		height: 15px;
+		width: 150px;
+	}
+	</ui:style>
+	<g:HTMLPanel>
+		<div ui:field="divBox" class="{style.box}">
+			<div ui:field="divLeft" class="{style.left}"></div>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 
