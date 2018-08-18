@@ -16,10 +16,6 @@ public class RefreshPlaylistInformationEvent extends GwtEvent<RefreshPlaylistInf
 		this.callback = callback;
 	}
 
-	public RefreshPlaylistInformationEvent(String path, RequestCallback callback) {
-		this.callback = callback;
-	}
-
 	public RequestCallback getCallback() {
 		return callback;
 	}

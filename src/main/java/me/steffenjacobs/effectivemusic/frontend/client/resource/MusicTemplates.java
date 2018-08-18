@@ -8,4 +8,7 @@ public interface MusicTemplates extends SafeHtmlTemplates {
 
 	@Template("{0}:{1}:{2}")
 	SafeHtml formatTimestamp(String hour, String minute, String second);
+
+	@Template("{0}:{1}")
+	SafeHtml formatTimestampSmall(String minute, String second);
 }

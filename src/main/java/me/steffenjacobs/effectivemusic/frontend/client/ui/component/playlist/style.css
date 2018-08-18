@@ -1,0 +1,14 @@
+.selectedTrack{
+	background-color: #ccc;
+}
+.track{
+	cursor: pointer;
+}
+.track:hover{
+	background-color: rgba(255,255,255,0.1);
+}
+.playlistBackground{
+	background-color: #abb2bc;
+	width: 100%;
+	height: 100%;
+}

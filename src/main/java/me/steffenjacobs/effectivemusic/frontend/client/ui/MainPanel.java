@@ -6,7 +6,6 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
-import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -30,21 +29,24 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.StartMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StopMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.TrackPositionChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.VolumeChangeEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlaylistInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshTrackInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.resource.Messages;
-import me.steffenjacobs.effectivemusic.frontend.client.resource.MusicTemplates;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.PlaylistManager;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.PlaylistPanel;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SimpleSlider;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SliderEventHandler;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDto;
 
 public class MainPanel extends Composite {
 
 	private static MainPanelUiBinder uiBinder = GWT.create(MainPanelUiBinder.class);
 	private static MusicAutobeanFactory factory = GWT.create(MusicAutobeanFactory.class);
-	private static MusicTemplates templates = GWT.create(MusicTemplates.class);
 
 	private static Messages msg = GWT.create(Messages.class);
-	private static final NumberFormat DOUBLE_DIGITS = NumberFormat.getFormat("00");
 
 	interface MainPanelUiBinder extends UiBinder<Widget, MainPanel> {
 	}
@@ -79,10 +81,15 @@ public class MainPanel extends Composite {
 	@UiField
 	SimpleSlider sliderTrackUi;
 
+	@UiField
+	PlaylistPanel playlistPanelUi;
+
 	private SimpleEventBus eventBus;
 
 	private boolean playing = false;
 	private boolean paused = false;
+
+	private final PlaylistManager playlistManager;
 
 	private Timer t = new Timer() {
 
@@ -94,19 +101,6 @@ public class MainPanel extends Composite {
 					playTitle.setText("No Track");
 					playTime.setText("");
 					playVolume.setText("");
-				}
-
-				private String formatPosition(double position, long lengthInMillis) {
-					long timeInMillis = (long) (position * lengthInMillis);
-					return formatTime(timeInMillis);
-				}
-
-				private String formatTime(long timeInMillis) {
-					timeInMillis /= 1000;
-					long hours = timeInMillis / 360;
-					long minutes = (timeInMillis % 360) / 60;
-					long seconds = timeInMillis % 360 % 60;
-					return templates.formatTimestamp(DOUBLE_DIGITS.format(hours), DOUBLE_DIGITS.format(minutes), DOUBLE_DIGITS.format(seconds)).asString();
 				}
 
 				@Override
@@ -126,11 +120,22 @@ public class MainPanel extends Composite {
 						} else {
 							playTitle.setText(dto.getTitle() + " - " + dto.getArtist());
 						}
-						playTime.setText(formatPosition(dto.getPosition(), dto.getLength()) + " - " + formatTime(dto.getLength()));
-						playVolume.setText("Volume: " + dto.getVolume() + "%");
+
+						playTime.setText(FormattingUtils.formatPosition(dto.getPosition(), dto.getLength()) + " - " + FormattingUtils.formatTime(dto.getLength()));
+						playVolume.setText("Volume: " + FormattingUtils.formatPercent(dto.getVolume()) + "%");
 						sliderVolumeUi.setPosition(dto.getVolume());
 						sliderTrackUi.setPosition(dto.getPosition() * 100);
 					}
+				}
+			}));
+
+			eventBus.fireEvent(new RefreshPlaylistInformationEvent(new DefaultRequestCallback() {
+
+				@Override
+				public void onResponseReceived(Request request, Response response) {
+					AutoBean<PlaylistDto> bean = AutoBeanCodex.decode(factory, PlaylistDto.class, response.getText());
+					PlaylistDto dto = bean.as();
+					playlistManager.updatePlaylist(dto);
 				}
 			}));
 		}
@@ -189,10 +194,13 @@ public class MainPanel extends Composite {
 		eventBus = evtBus;
 		// init display
 		initWidget(uiBinder.createAndBindUi(this));
+		EffectiveMusicResources.RES.style().ensureInjected();
+		playlistManager = new PlaylistManager(playlistPanelUi);
 		textBox.getElement().setPropertyString("placeholder", msg.textboxPlaceholder());
 		setupTrackListener();
 		setupVolumeListener();
 		startAutoUpdate();
+
 	}
 
 	@UiHandler("stopButton")
@@ -218,6 +226,7 @@ public class MainPanel extends Composite {
 			}));
 		} else if (paused) {
 			eventBus.fireEvent(new ResumeMusicEvent(new DefaultRequestCallback() {
+
 				@Override
 				public void onResponseReceived(Request request, Response response) {
 					setPlaying(true);
@@ -232,6 +241,7 @@ public class MainPanel extends Composite {
 				}
 			}));
 		}
+
 	}
 
 	@UiHandler("nextButton")
