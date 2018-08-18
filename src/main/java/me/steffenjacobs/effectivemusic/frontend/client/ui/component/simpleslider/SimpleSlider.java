@@ -3,10 +3,8 @@ package me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslide
 import java.util.LinkedList;
 import java.util.List;
 
-import com.google.gwt.animation.client.Animation;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Element;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -51,7 +49,7 @@ public class SimpleSlider extends Composite {
 
 			@Override
 			public void onClick(NativeEvent event) {
-				new SlideAnimation(divLeft, (double) event.getClientX() - divBox.getAbsoluteLeft()).run(100);
+				setPosition((((double) event.getClientX() - divBox.getAbsoluteLeft()) / divBox.getClientWidth()) * 100);
 			}
 		};
 
@@ -100,30 +98,6 @@ public class SimpleSlider extends Composite {
 
 	public void setBarColor(String color) {
 		divLeft.getStyle().setBackgroundColor(color);
-	}
-
-	private class SlideAnimation extends Animation {
-		private final Element element;
-		private final double targetWidth;
-		private final double startWidth;
-
-		//TODO: use CSS transition instead
-		public SlideAnimation(Element element, double targetWidth) {
-			position = 100 * targetWidth / divBox.getClientWidth();
-			this.element = element;
-			this.targetWidth = targetWidth;
-			this.startWidth = element.getClientWidth();
-		}
-
-		@Override
-		protected void onComplete() {
-			element.getStyle().setWidth(targetWidth, Unit.PX);
-		}
-
-		@Override
-		protected void onUpdate(double progress) {
-			element.getStyle().setWidth(startWidth + progress * (targetWidth - startWidth), Unit.PX);
-		}
 	}
 
 	private class BeautifulSliderEventListener implements EventListener {
