@@ -19,6 +19,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.StartMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StopMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.TrackPositionChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.VolumeChangeEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlayerInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlaylistInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshTrackInformationEvent;
 
@@ -54,6 +55,7 @@ public class WebAppController {
 				event -> sendRequest("http://localhost:8080/music/position?position=" + event.getPosition() / 100, true, event.getCallback()));
 		eventBus.addHandler(VolumeChangeEvent.TYPE, event -> sendRequest("http://localhost:8080/music/gain?gain=" + event.getVolume(), true, event.getCallback()));
 		eventBus.addHandler(RefreshPlaylistInformationEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist", false, event.getCallback()));
+		eventBus.addHandler(RefreshPlayerInformationEvent.TYPE, event -> sendRequest("http://localhost:8080/music/player", false, event.getCallback()));
 	}
 
 	private void sendRequest(String uri, boolean post) {

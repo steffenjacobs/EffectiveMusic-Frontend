@@ -6,13 +6,13 @@ import com.google.gwt.http.client.RequestCallback;
 /**
  * @author Steffen Jacobs
  */
-public class RefreshTrackInformationEvent extends GwtEvent<RefreshTrackInformationEventHandler> {
+public class RefreshPlayerInformationEvent extends GwtEvent<RefreshPlayerInformationEventHandler> {
 
-	public static final Type<RefreshTrackInformationEventHandler> TYPE = new Type<>();
+	public static final Type<RefreshPlayerInformationEventHandler> TYPE = new Type<>();
 
 	final RequestCallback callback;
 
-	public RefreshTrackInformationEvent(RequestCallback callback) {
+	public RefreshPlayerInformationEvent(RequestCallback callback) {
 		this.callback = callback;
 	}
 
@@ -21,12 +21,12 @@ public class RefreshTrackInformationEvent extends GwtEvent<RefreshTrackInformati
 	}
 
 	@Override
-	protected void dispatch(RefreshTrackInformationEventHandler handler) {
+	protected void dispatch(RefreshPlayerInformationEventHandler handler) {
 		handler.onRefresh(this);
 	}
 
 	@Override
-	public Type<RefreshTrackInformationEventHandler> getAssociatedType() {
+	public Type<RefreshPlayerInformationEventHandler> getAssociatedType() {
 		return TYPE;
 	}
 }

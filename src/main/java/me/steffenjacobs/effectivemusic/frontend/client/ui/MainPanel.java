@@ -29,6 +29,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.StartMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StopMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.TrackPositionChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.VolumeChangeEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlayerInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlaylistInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshTrackInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.resource.Messages;
@@ -38,6 +39,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.Pla
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.PlaylistPanel;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SimpleSlider;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SliderEventHandler;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.PlayerInformationDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDto;
 
@@ -120,11 +122,7 @@ public class MainPanel extends Composite {
 						} else {
 							playTitle.setText(dto.getTitle() + " - " + dto.getArtist());
 						}
-
-						playTime.setText(FormattingUtils.formatPosition(dto.getPosition(), dto.getLength()) + " - " + FormattingUtils.formatTime(dto.getLength()));
-						playVolume.setText("Volume: " + FormattingUtils.formatPercent(dto.getVolume()) + "%");
-						sliderVolumeUi.setPosition(dto.getVolume());
-						sliderTrackUi.setPosition(dto.getPosition() * 100);
+						setPosition(dto.getPosition(), dto.getLength());
 					}
 				}
 			}));
@@ -138,8 +136,30 @@ public class MainPanel extends Composite {
 					playlistManager.updatePlaylist(dto);
 				}
 			}));
+			
+			eventBus.fireEvent(new RefreshPlayerInformationEvent(new DefaultRequestCallback(){
+				@Override
+				public void onResponseReceived(Request request, Response response) {
+					AutoBean<PlayerInformationDTO> bean = AutoBeanCodex.decode(factory, PlayerInformationDTO.class, response.getText());
+					PlayerInformationDTO dto = bean.as();
+					setPlaying("PLAYING".equals(dto.getStatus()));
+					setVolume(dto.getVolume());
+				}
+			}));
 		}
 	};
+	
+	public void setPosition(double position, long length){
+
+		playTime.setText(FormattingUtils.formatPosition(position, length) + " - " + FormattingUtils.formatTime(length));
+		sliderTrackUi.setPosition(position * 100);
+		
+	}
+	
+	public void setVolume(double volume){
+		playVolume.setText("Volume: " + FormattingUtils.formatPercent(volume) + "%");
+		sliderVolumeUi.setPosition(volume);
+	}
 
 	public void setPlaying(boolean value) {
 		startPauseButton.setText(value ? msg.pauseButton() : msg.startButton());
