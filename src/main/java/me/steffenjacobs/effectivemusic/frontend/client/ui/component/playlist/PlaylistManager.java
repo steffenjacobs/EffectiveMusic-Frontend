@@ -5,6 +5,7 @@ import java.util.List;
 
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDto;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackImpl;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackWrapperDto;
 
 /** @author Steffen Jacobs */
@@ -42,10 +43,14 @@ public class PlaylistManager {
 		playlist.clear();
 		for (TrackWrapperDto track : dto.getTracks()) {
 			if (track != null && track.getTrackDTO() != null) {
-				playlist.add(track.getTrackDTO());
+				playlist.add(new TrackImpl(track.getTrackDTO()));
 			}
 		}
 		refreshUi();
+	}
+
+	public void setCurrentTrack(TrackDto dto) {
+		panel.setCurrentlyPlaying(dto);
 	}
 
 }

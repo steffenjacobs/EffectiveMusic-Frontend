@@ -1,14 +1,29 @@
-.selectedTrack{
-	background-color: #ccc;
+.playingTrack {
+	background-color: #636f8d;
 }
-.track{
+
+.backgroundColor {
+	background-color: #464e64;
+}
+
+.selectionColor {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.highlightColor {
+	background-color: #636f8d;
+}
+
+.track {
 	cursor: pointer;
 }
-.track:hover{
-	background-color: rgba(255,255,255,0.1);
+
+.track:hover {
+	background-color: rgba(255, 255, 255, 0.1);
 }
-.playlistBackground{
-	background-color: #abb2bc;
+
+.playlistBackground {
+	background-color: #464e64;
 	width: 100%;
 	height: 100%;
 }

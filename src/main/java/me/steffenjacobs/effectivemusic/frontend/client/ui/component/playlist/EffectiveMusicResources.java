@@ -7,7 +7,7 @@ import com.google.gwt.resources.client.CssResource;
 /** @author Steffen Jacobs */
 public class EffectiveMusicResources {
 
-	public static final RES RES = GWT.create(RES.class);
+	public static final RES INSTANCE = GWT.create(RES.class);
 
 	public interface RES extends ClientBundle {
 		@Source("style.css")
@@ -17,8 +17,14 @@ public class EffectiveMusicResources {
 	public interface CSS extends CssResource {
 		String track();
 
-		String selectedTrack();
-
 		String playlistBackground();
+
+		String playingTrack();
+		
+		String backgroundColor();
+		
+		String highlightColor();
+		
+		String selectionColor();
 	}
 }

@@ -42,6 +42,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlayerInformationDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDto;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackImpl;
 
 public class MainPanel extends Composite {
 
@@ -95,6 +96,8 @@ public class MainPanel extends Composite {
 
 	private Timer t = new Timer() {
 
+		private TrackDto lastTrack;
+
 		@Override
 		public void run() {
 			eventBus.fireEvent(new RefreshTrackInformationEvent(new DefaultRequestCallback() {
@@ -112,8 +115,15 @@ public class MainPanel extends Composite {
 						return;
 					} else {
 						AutoBean<TrackDto> bean = AutoBeanCodex.decode(factory, TrackDto.class, response.getText());
-						TrackDto dto = bean.as();
-						if (dto == null) {
+						final TrackDto autoBeanTrack = bean.as();
+						TrackDto dto = new TrackImpl(autoBeanTrack);
+						if (dto.equals(lastTrack)) {
+							setPosition(dto.getPosition(), dto.getLength());
+							return;
+						}
+						playlistManager.setCurrentTrack(dto);
+						lastTrack = dto;
+						if (autoBeanTrack == null) {
 							clearTextFields();
 							return;
 						}
@@ -136,8 +146,8 @@ public class MainPanel extends Composite {
 					playlistManager.updatePlaylist(dto);
 				}
 			}));
-			
-			eventBus.fireEvent(new RefreshPlayerInformationEvent(new DefaultRequestCallback(){
+
+			eventBus.fireEvent(new RefreshPlayerInformationEvent(new DefaultRequestCallback() {
 				@Override
 				public void onResponseReceived(Request request, Response response) {
 					AutoBean<PlayerInformationDTO> bean = AutoBeanCodex.decode(factory, PlayerInformationDTO.class, response.getText());
@@ -148,15 +158,13 @@ public class MainPanel extends Composite {
 			}));
 		}
 	};
-	
-	public void setPosition(double position, long length){
 
+	public void setPosition(double position, long length) {
 		playTime.setText(FormattingUtils.formatPosition(position, length) + " - " + FormattingUtils.formatTime(length));
 		sliderTrackUi.setPosition(position * 100);
-		
 	}
-	
-	public void setVolume(double volume){
+
+	public void setVolume(double volume) {
 		playVolume.setText("Volume: " + FormattingUtils.formatPercent(volume) + "%");
 		sliderVolumeUi.setPosition(volume);
 	}
@@ -214,7 +222,7 @@ public class MainPanel extends Composite {
 		eventBus = evtBus;
 		// init display
 		initWidget(uiBinder.createAndBindUi(this));
-		EffectiveMusicResources.RES.style().ensureInjected();
+		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		playlistManager = new PlaylistManager(playlistPanelUi);
 		textBox.getElement().setPropertyString("placeholder", msg.textboxPlaceholder());
 		setupTrackListener();
