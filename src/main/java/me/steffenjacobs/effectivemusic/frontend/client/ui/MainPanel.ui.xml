@@ -1,24 +1,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:t="urn:import:me.steffenjacobs.effectivemusic.frontend.client.ui"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:c="urn:import:me.steffenjacobs.effectivemusic.frontend.client.ui.component">
-	<!-- import for i18n messages -->
 	<ui:with
 		type="me.steffenjacobs.effectivemusic.frontend.client.resource.Messages"
 		field="messages" />
-	<!-- import for resources bundle -->
-	<ui:with
-		type="me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources"
-		field="res" />
-
-	<ui:style>
-	.inline {
-		margin-right: 10px;
-		display: inline-block;
-		font-size: 18px;
-		vertical-align: middle;
-	}
-	</ui:style>
 
 	<g:DockLayoutPanel>
 		<!-- Top panel -->
@@ -27,37 +13,8 @@
 				<h1>
 					<g:InlineLabel text="{messages.titleMessage}" />
 				</h1>
-				<!-- main toolbox -->
-				<div class="{res.style.todoPanel}">
-					<g:TextBox ui:field="textBox" />
-					<g:Button styleName="{res.style.sendButton}" text="{messages.stopButton}"
-						ui:field="stopButton" />
-					<g:Button styleName="{res.style.sendButton}" text="{messages.startButton}"
-						ui:field="startPauseButton" />
-					<g:Button styleName="{res.style.sendButton}" text="{messages.previousButton}"
-						ui:field="previousButton" />
-					<g:Button styleName="{res.style.sendButton}" text="{messages.nextButton}"
-						ui:field="nextButton" />
-					<div class="{style.inline}">
-						<div class="{style.inline}">
-							<g:Label ui:field="playTitle" />
-						</div>
-						<div class="{style.inline}">
-							<g:Label ui:field="playTime" />
-						</div>
-						<div class="{style.inline}">
-							<g:Label ui:field="playVolume" />
-						</div>
-					</div>
-					<div class="{style.inline}">
-						<c:simpleslider.SimpleSlider ui:field="sliderVolumeUi" />
-						<!-- <m:MaterialRange ui:field="volumeSlider" min="0" max="100" value="0"/> -->
-					</div>
-					<div class="{style.inline}">
-						<c:simpleslider.SimpleSlider ui:field="sliderTrackUi" />
-						<!-- <m:MaterialRange ui:field="trackSlider" min="0" max="100" value="100"/> -->
-					</div>
-				</div>
+				<!-- Main Control Panel -->
+				<c:controlpanel.ControlPanel ui:field="controlPanel" />
 			</g:HTMLPanel>
 		</g:north>
 
@@ -68,12 +25,12 @@
 			<g:FlowPanel></g:FlowPanel>
 		</g:center>
 
+		<!-- PlayliSst -->
 		<g:east size="550">
 			<g:ScrollPanel>
 				<c:playlist.PlaylistPanel ui:field="playlistPanelUi"
 					height="100%" />
 			</g:ScrollPanel>
 		</g:east>
-
 	</g:DockLayoutPanel>
 </ui:UiBinder> 
