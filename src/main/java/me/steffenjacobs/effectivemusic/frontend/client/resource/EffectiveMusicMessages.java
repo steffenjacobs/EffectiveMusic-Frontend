@@ -3,7 +3,7 @@ package me.steffenjacobs.effectivemusic.frontend.client.resource;
 /**
  * i18n Resource Bundle Gather application messages
  */
-public interface Messages extends com.google.gwt.i18n.client.Messages {
+public interface EffectiveMusicMessages extends com.google.gwt.i18n.client.Messages {
 
 	@Key("stopButton")
 	String stopButton();
@@ -25,5 +25,11 @@ public interface Messages extends com.google.gwt.i18n.client.Messages {
 
 	@Key("titleMessage")
 	String titleMessage();
+
+	@Key("position")
+	String position();
+
+	@Key("volume")
+	String volume();
 
 }

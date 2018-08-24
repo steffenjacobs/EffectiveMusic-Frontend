@@ -3,7 +3,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:c="urn:import:me.steffenjacobs.effectivemusic.frontend.client.ui.component">
 	<ui:with
-		type="me.steffenjacobs.effectivemusic.frontend.client.resource.Messages"
+		type="me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages"
 		field="messages" />
 
 	<g:DockLayoutPanel>
@@ -25,8 +25,8 @@
 			<g:FlowPanel></g:FlowPanel>
 		</g:center>
 
-		<!-- PlayliSst -->
-		<g:east size="550">
+		<!-- Playlist  50em-->
+		<g:east size="600">
 			<g:ScrollPanel>
 				<c:playlist.PlaylistPanel ui:field="playlistPanelUi"
 					height="100%" />

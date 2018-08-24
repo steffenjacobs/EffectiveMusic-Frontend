@@ -24,7 +24,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.StartMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StopMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.TrackPositionChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.VolumeChangeEvent;
-import me.steffenjacobs.effectivemusic.frontend.client.resource.Messages;
+import me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SimpleSlider;
@@ -38,7 +38,7 @@ public class ControlPanel extends Composite {
 	interface ControlPanelUiBinder extends UiBinder<Widget, ControlPanel> {
 	}
 
-	private static Messages msg = GWT.create(Messages.class);
+	private static EffectiveMusicMessages msg = GWT.create(EffectiveMusicMessages.class);
 
 	@UiField
 	Button stopButton;

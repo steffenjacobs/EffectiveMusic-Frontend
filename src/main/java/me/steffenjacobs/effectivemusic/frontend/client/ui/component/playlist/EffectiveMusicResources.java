@@ -26,5 +26,17 @@ public class EffectiveMusicResources {
 		String highlightColor();
 		
 		String selectionColor();
+		
+		String controlFirstCol();
+		
+		String controlSecondCol();
+		
+		String controlPanel();
+		
+		String secondColor();
+		
+		String thirdColor();
+		
+		String trackTitleTextBox();
 	}
 }

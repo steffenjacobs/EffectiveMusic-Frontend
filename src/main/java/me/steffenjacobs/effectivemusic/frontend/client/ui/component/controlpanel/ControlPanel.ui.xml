@@ -4,12 +4,15 @@
 	xmlns:c="urn:import:me.steffenjacobs.effectivemusic.frontend.client.ui.component">
 	<!-- import for i18n messages -->
 	<ui:with
-		type="me.steffenjacobs.effectivemusic.frontend.client.resource.Messages"
+		type="me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages"
 		field="messages" />
 	<!-- import for resources bundle -->
 	<ui:with
 		type="me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources"
 		field="res" />
+	<ui:with
+		type="me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources.RES"
+		field="res2" />
 	<ui:style>
 	.inline {
 		margin-right: 10px;
@@ -20,34 +23,45 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<!-- main toolbox -->
-		<div class="{res.style.todoPanel}">
-			<g:TextBox ui:field="textBox" />
-			<g:Button styleName="{res.style.sendButton}" text="{messages.stopButton}"
-				ui:field="stopButton" />
-			<g:Button styleName="{res.style.sendButton}" text="{messages.startButton}"
-				ui:field="startPauseButton" />
-			<g:Button styleName="{res.style.sendButton}" text="{messages.previousButton}"
-				ui:field="previousButton" />
-			<g:Button styleName="{res.style.sendButton}" text="{messages.nextButton}"
-				ui:field="nextButton" />
+		<div class="{res2.style.controlPanel} {res2.style.backgroundColor}">
+			<g:TextBox styleName="{res2.style.secondColor} {res2.style.trackTitleTextBox}" ui:field="textBox" />
+			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor}"
+				text="{messages.stopButton}" ui:field="stopButton" />
+			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor}"
+				text="{messages.startButton}" ui:field="startPauseButton" />
+			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor}"
+				text="{messages.previousButton}" ui:field="previousButton" />
+			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor}"
+				text="{messages.nextButton}" ui:field="nextButton" />
 			<div class="{style.inline}">
 				<div class="{style.inline}">
 					<g:Label ui:field="playTitle" />
 				</div>
-				<div class="{style.inline}">
-					<g:Label ui:field="playTime" />
-				</div>
-				<div class="{style.inline}">
-					<g:Label ui:field="playVolume" />
-				</div>
 			</div>
-			<div class="{style.inline}">
-				<c:simpleslider.SimpleSlider ui:field="sliderVolumeUi" />
-				<!-- <m:MaterialRange ui:field="volumeSlider" min="0" max="100" value="0"/> -->
-			</div>
-			<div class="{style.inline}">
-				<c:simpleslider.SimpleSlider ui:field="sliderTrackUi" />
-				<!-- <m:MaterialRange ui:field="trackSlider" min="0" max="100" value="100"/> -->
+			<div>
+				<div>
+					<div class="{style.inline} {res2.style.controlFirstCol}">
+						<ui:text from="{messages.position}" />
+					</div>
+					<div class="{style.inline}">
+						<c:simpleslider.SimpleSlider ui:field="sliderTrackUi" />
+					</div>
+					<div class="{style.inline}">
+						<g:Label ui:field="playTime" />
+					</div>
+					<div>
+						<div class="{style.inline} {res2.style.controlFirstCol}">
+							<ui:text from="{messages.volume}" />
+						</div>
+						<div class="{style.inline} ">
+							<c:simpleslider.SimpleSlider
+								ui:field="sliderVolumeUi" />
+						</div>
+						<div class="{style.inline}">
+							<g:Label ui:field="playVolume" />
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</g:HTMLPanel>

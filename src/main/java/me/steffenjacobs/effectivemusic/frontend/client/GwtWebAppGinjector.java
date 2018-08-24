@@ -6,7 +6,7 @@ import com.google.gwt.inject.client.Ginjector;
 
 import me.steffenjacobs.effectivemusic.frontend.client.controller.WebAppController;
 import me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources;
-import me.steffenjacobs.effectivemusic.frontend.client.resource.Messages;
+import me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.MainPanel;
 
 @GinModules(GwtWebAppGinModule.class)
@@ -16,7 +16,7 @@ public interface GwtWebAppGinjector extends Ginjector {
 
 	public ApplicationResources getApplicationResources();
 
-	public Messages getMessages();
+	public EffectiveMusicMessages getMessages();
 
 	public WebAppController getWebAppController();
 

@@ -6,7 +6,7 @@ import com.google.inject.Singleton;
 
 import me.steffenjacobs.effectivemusic.frontend.client.controller.WebAppController;
 import me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources;
-import me.steffenjacobs.effectivemusic.frontend.client.resource.Messages;
+import me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.MainPanel;
 
 public class GwtWebAppGinModule extends AbstractGinModule{
@@ -14,7 +14,7 @@ public class GwtWebAppGinModule extends AbstractGinModule{
 	@Override
 	protected void configure() {
 		// Resources
-		bind(Messages.class).in(Singleton.class);
+		bind(EffectiveMusicMessages.class).in(Singleton.class);
 		bind(ApplicationResources.class).in(Singleton.class);
 		
 		// Core
