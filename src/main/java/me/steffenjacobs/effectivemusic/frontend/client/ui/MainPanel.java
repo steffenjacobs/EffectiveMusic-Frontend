@@ -73,8 +73,10 @@ public class MainPanel extends Composite {
 						}
 						if (dto.getTitle() == null) {
 							controlPanel.setTrackTitle("No Track");
-						} else {
+						} else if (dto.getArtist() != null) {
 							controlPanel.setTrackTitle(dto.getTitle() + " - " + dto.getArtist());
+						} else {
+							controlPanel.setTrackTitle(dto.getTitle());
 						}
 						controlPanel.setPosition(dto.getPosition(), dto.getLength());
 					}
