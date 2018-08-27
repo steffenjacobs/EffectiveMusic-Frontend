@@ -1,12 +1,15 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -21,6 +24,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.ui.component.controlpanel
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.PlaylistManager;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.PlaylistPanel;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefilebrowser.RemoteFileBrowserDialog;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlayerInformationDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDto;
@@ -40,7 +44,10 @@ public class MainPanel extends Composite {
 	@UiField
 	PlaylistPanel playlistPanelUi;
 
-	private SimpleEventBus eventBus;
+	@UiField
+	Button remoteFileBrowserButtonUi;
+
+	private SimpleEventBus eventBus = null;
 
 	private final PlaylistManager playlistManager;
 
@@ -107,6 +114,11 @@ public class MainPanel extends Composite {
 
 	private void startAutoUpdate() {
 		t.scheduleRepeating(1000);
+	}
+
+	@UiHandler("remoteFileBrowserButtonUi")
+	public void onClick(ClickEvent e) {
+		new RemoteFileBrowserDialog(f -> GWT.log("chosen: " + f), eventBus);
 	}
 
 	@Inject

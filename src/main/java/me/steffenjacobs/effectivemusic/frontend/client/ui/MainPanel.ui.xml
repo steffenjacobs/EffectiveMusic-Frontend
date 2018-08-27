@@ -22,7 +22,9 @@
 			<g:FlowPanel></g:FlowPanel>
 		</g:west>
 		<g:center size="330">
-			<g:FlowPanel></g:FlowPanel>
+			<g:FlowPanel>
+				<g:Button ui:field="remoteFileBrowserButtonUi" text="Open"/>
+			</g:FlowPanel>
 		</g:center>
 
 		<!-- Playlist  50em-->

@@ -1,0 +1,28 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	.important {
+		font-weight: bold;
+		height: 30px;
+	}
+	
+	.fileListUi {
+		margin-top: 1em;
+	}
+	
+	.scrollPanel {
+		max-height: 60em;
+		max-width: 40em;
+	}
+	</ui:style>
+
+	<g:HTMLPanel>
+		<g:TextBox ui:field="browsePathUi" />
+		<g:Button styleName="{style.important}" ui:field="browseButtonUi"
+			text="Browse" />
+		<g:ScrollPanel addStyleNames="{style.scrollPanel}">
+			<g:FlowPanel ui:field="fileListUi" addStyleNames="{style.fileListUi}" />
+		</g:ScrollPanel>
+	</g:HTMLPanel>
+</ui:UiBinder> 

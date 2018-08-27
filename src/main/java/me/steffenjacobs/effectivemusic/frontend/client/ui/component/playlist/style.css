@@ -72,3 +72,26 @@
 	font-size: 1.5em;
 	width: 20em;
 }
+
+.fileBrowserItemNonClickable {
+	margin-left: 1em;
+	text-align: left;
+	background: #c2c8d6;
+	color: #464e64;
+}
+
+.fileBrowserItem {
+	margin-left: 1em;
+	cursor: pointer;
+	text-align: left;
+	background: #c2c8d6;
+	color: #464e64;
+}
+
+.fileBrowserItem:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.fileBrowserItem:active {
+	background-color: rgba(255, 255, 255, 0.2);
+}

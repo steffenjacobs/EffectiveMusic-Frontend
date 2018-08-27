@@ -20,23 +20,27 @@ public class EffectiveMusicResources {
 		String playlistBackground();
 
 		String playingTrack();
-		
+
 		String backgroundColor();
-		
+
 		String highlightColor();
-		
+
 		String selectionColor();
-		
+
 		String controlFirstCol();
-		
+
 		String controlSecondCol();
-		
+
 		String controlPanel();
-		
+
 		String secondColor();
-		
+
 		String thirdColor();
-		
+
 		String trackTitleTextBox();
+
+		String fileBrowserItemNonClickable();
+
+		String fileBrowserItem();
 	}
 }

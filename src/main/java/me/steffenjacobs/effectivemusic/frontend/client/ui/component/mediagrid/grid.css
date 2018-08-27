@@ -1,0 +1,125 @@
+
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.grid {
+    width: 100%;
+    min-width: 260px;
+    max-width: 1230px;
+    margin: 0 auto; 
+}
+
+.grid:after {
+    content: "";
+    display: table;
+    clear: both
+}
+
+[class*='loop'] {
+    float: left;
+    padding: 10px; 
+}
+
+[class*='loop']:last-of-type {
+    float: right;
+}
+
+/*The First Grid*/
+
+.loop1 {width: 8.3%;}
+
+.loop2 {width: 16.6%;}
+
+.loop3 {width: 25%;}
+
+.loop4 {width: 33.3%;}
+
+.loop5 {width: 41.6%;}
+
+.loop6 {width: 50%;}
+
+.loop7 {width: 58.3%;}
+
+.loop8 {width: 66.6%;}
+
+.loop9 {width: 75%;}
+
+.loop10 {width: 83.3%;}
+
+.loop11 {width: 91.6%;}
+
+.loop12 {width: 100%;}
+
+
+/*The Second Grid*/
+
+.loop-1 {width: 100%;}
+
+.loop-2 {width: 50%;}
+
+.loop-3 {width: 33.3%;}
+
+.loop-4 {width: 25%;}
+
+.loop-5 {width: 20%;}
+
+.loop-6 {width: 16.6%;}
+
+.loop-7 {width: 14.285%;}
+
+.loop-8 {width: 12.5%;}
+
+.loop-9 {width: 11.1%;}
+
+.loop-10 {width: 10%;}
+
+.loop-11 {width: 9.09%;}
+
+.loop-12 {width: 8.333%;}
+
+
+/*Break Point*/
+
+@media (max-width: 768px) {
+    .loop1,
+    .loop2,
+    .loop3,
+    .loop4,
+    .loop5,
+    .loop6,
+    .loop7,
+    .loop8,
+    .loop9,
+    .loop10,
+    .loop11,
+    .loop12 {
+        width: 100%;
+    }
+    
+    .loop-1,
+    .loop-2,
+    .loop-3,
+    .loop-4,
+    .loop-5,
+    .loop-6,
+    .loop-7,
+    .loop-8,
+    .loop-9,
+    .loop-10,
+    .loop-11,
+    .loop-12 {
+        width:100%;
+    }
+}
