@@ -8,12 +8,14 @@
 	}
 	
 	.fileListUi {
-		margin-top: 1em;
+		padding: 0.5em;
 	}
 	
 	.scrollPanel {
-		max-height: 60em;
+		margin-top: 1em;
+		max-height: 50em;
 		max-width: 40em;
+		background: #c2c8d6;
 	}
 	</ui:style>
 

@@ -16,7 +16,7 @@
 }
 
 .secondColor {
-	background-color: #ed8236;
+	background: #ed8236;
 	color: #c2c8d6;
 }
 
@@ -74,14 +74,12 @@
 }
 
 .fileBrowserItemNonClickable {
-	margin-left: 1em;
 	text-align: left;
 	background: #c2c8d6;
 	color: #464e64;
 }
 
 .fileBrowserItem {
-	margin-left: 1em;
 	cursor: pointer;
 	text-align: left;
 	background: #c2c8d6;
@@ -94,4 +92,13 @@
 
 .fileBrowserItem:active {
 	background-color: rgba(255, 255, 255, 0.2);
+}
+
+.dialogBox {
+	background-color: #464e64;
+	border-radius: 0.5em;
+	border: 0.5em solid #313746;
+}
+.dialogPanel{
+      border: 2px inset #636f8d;
 }

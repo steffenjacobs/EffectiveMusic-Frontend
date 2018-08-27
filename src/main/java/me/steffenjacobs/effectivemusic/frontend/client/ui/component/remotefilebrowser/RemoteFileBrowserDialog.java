@@ -62,6 +62,7 @@ public class RemoteFileBrowserDialog extends DialogBox {
 
 		panel.add(buttons);
 		panel.addStyleName(EffectiveMusicResources.INSTANCE.style().highlightColor());
+		panel.addStyleName(EffectiveMusicResources.INSTANCE.style().dialogPanel());
 
 		super.setWidget(panel);
 
@@ -70,9 +71,11 @@ public class RemoteFileBrowserDialog extends DialogBox {
 		super.setAnimationType(AnimationType.ROLL_DOWN);
 		super.setStyleName("style_dialog");
 
-		// super.setGlassEnabled(true);
+		 super.setGlassEnabled(true);
 
 		super.center();
 		super.show();
+		super.getCaption().setHTML("<div style='text-align: center; font-size: 1.66em;color:#c2c8d6; background-color: #313746; border-radius: none;'>Choose a directory</div>");
+		panel.getParent().getParent().addStyleName(EffectiveMusicResources.INSTANCE.style().dialogBox());
 	}
 }

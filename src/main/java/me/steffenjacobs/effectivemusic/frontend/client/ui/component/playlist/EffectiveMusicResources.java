@@ -42,5 +42,9 @@ public class EffectiveMusicResources {
 		String fileBrowserItemNonClickable();
 
 		String fileBrowserItem();
+
+		String dialogBox();
+
+		String dialogPanel();
 	}
 }
