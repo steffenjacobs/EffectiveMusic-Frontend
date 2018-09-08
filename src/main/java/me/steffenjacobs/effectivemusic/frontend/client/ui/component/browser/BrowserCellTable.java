@@ -10,8 +10,7 @@ import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.view.client.MultiSelectionModel;
 
 import me.steffenjacobs.effectivemusic.frontend.client.controller.Base64Encoder;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.AddToPlaylistEvent;
@@ -30,17 +29,10 @@ public class BrowserCellTable implements IsWidget {
 	public BrowserCellTable() {
 		cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
-		// Add a selection model to handle user selection.
-		final SingleSelectionModel<TrackDTO> singleSelectionModel = new SingleSelectionModel<TrackDTO>();
-		cellTable.setSelectionModel(singleSelectionModel);
-		singleSelectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
-			public void onSelectionChange(SelectionChangeEvent event) {
-				TrackDTO selectedTrack = singleSelectionModel.getSelectedObject();
-				if (selectedTrack != null) {
-					eventBus.fireEvent(new AddToPlaylistEvent(new String(Base64Encoder.encode(selectedTrack.getPath().getBytes())), null));
-				}
-			}
-		});
+		final MultiSelectionModel<TrackDTO> multiSelectionModel = new MultiSelectionModel<>();
+		multiSelectionModel.addSelectionChangeHandler(
+				e -> multiSelectionModel.getSelectedSet().forEach(t -> eventBus.fireEvent(new AddToPlaylistEvent(new String(Base64Encoder.encode(t.getPath().getBytes())), null))));
+		cellTable.setSelectionModel(multiSelectionModel);
 
 		cellTable.addColumn(titleColumn, "Title");
 		cellTable.addColumn(artistColumn, "Artist");
