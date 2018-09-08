@@ -28,6 +28,9 @@ public class PlaylistManager {
 	private void refreshUi() {
 		panel.clear();
 		panel.setPlaylist(playlist);
+		if (currentlyPlayed != null) {
+			forceUpdateCurrentTrack(currentlyPlayed);
+		}
 	}
 
 	public void updatePlaylist(PlaylistImpl newPlaylist) {
@@ -47,6 +50,10 @@ public class PlaylistManager {
 		if (currentlyPlayed != null && currentlyPlayed.equals(dto)) {
 			return;
 		}
+		forceUpdateCurrentTrack(dto);
+	}
+
+	private void forceUpdateCurrentTrack(LiveTrackDTO dto) {
 		currentlyPlayed = dto;
 		for (TrackWithPathImpl track : playlist) {
 			if (track.getTrack().equals(dto)) {
