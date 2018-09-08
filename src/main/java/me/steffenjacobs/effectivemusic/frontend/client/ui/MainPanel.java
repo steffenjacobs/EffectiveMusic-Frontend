@@ -23,9 +23,10 @@ import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.Eff
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.PlaylistManager;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.PlaylistPanel;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDTO;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackImpl;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlayerInformationDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
-import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackImpl;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistImpl;
 
 public class MainPanel extends Composite {
 
@@ -64,7 +65,7 @@ public class MainPanel extends Composite {
 					} else {
 						AutoBean<LiveTrackDTO> bean = AutoBeanCodex.decode(factory, LiveTrackDTO.class, response.getText());
 						final LiveTrackDTO autoBeanTrack = bean.as();
-						LiveTrackDTO dto = new TrackImpl(autoBeanTrack);
+						LiveTrackDTO dto = new LiveTrackImpl(autoBeanTrack);
 						if (dto.equals(lastTrack)) {
 							controlPanel.setPosition(dto.getPosition(), dto.getLength());
 //							return;
@@ -93,7 +94,7 @@ public class MainPanel extends Composite {
 				public void onResponseReceived(Request request, Response response) {
 					AutoBean<PlaylistDto> bean = AutoBeanCodex.decode(factory, PlaylistDto.class, response.getText());
 					PlaylistDto dto = bean.as();
-					playlistManager.updatePlaylist(dto);
+					playlistManager.updatePlaylist(new PlaylistImpl(dto));
 				}
 			}));
 
@@ -121,7 +122,7 @@ public class MainPanel extends Composite {
 		controlPanel.setEventBus(evtBus);
 		browserPanelUi.setEventBus(evtBus);
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
-		playlistManager = new PlaylistManager(playlistPanelUi);
+		playlistManager = new PlaylistManager(playlistPanelUi, evtBus);
 		startAutoUpdate();
 
 	}

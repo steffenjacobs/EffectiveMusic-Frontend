@@ -1,12 +1,12 @@
 package me.steffenjacobs.effectivemusic.frontend.common.domain;
 
-public class TrackImpl implements LiveTrackDTO {
+public class LiveTrackImpl implements LiveTrackDTO {
 
 	private String artist, album, title, year, comment, track, discNo, composer, artistSort;
 	private long length;
 	private double volume, position;
 
-	public TrackImpl(LiveTrackDTO liveTrackDTO) {
+	public LiveTrackImpl(LiveTrackDTO liveTrackDTO) {
 		if (liveTrackDTO == null) {
 			return;
 		}
@@ -24,7 +24,7 @@ public class TrackImpl implements LiveTrackDTO {
 		this.position = liveTrackDTO.getPosition();
 	}
 
-	public TrackImpl() {
+	public LiveTrackImpl() {
 
 	}
 
@@ -153,6 +153,7 @@ public class TrackImpl implements LiveTrackDTO {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((artist == null) ? 0 : artist.hashCode());
+		result = prime * result + (int) (length ^ (length >>> 32));
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
@@ -165,11 +166,13 @@ public class TrackImpl implements LiveTrackDTO {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TrackImpl other = (TrackImpl) obj;
+		LiveTrackImpl other = (LiveTrackImpl) obj;
 		if (artist == null) {
 			if (other.artist != null)
 				return false;
 		} else if (!artist.equals(other.artist))
+			return false;
+		if (length != other.length)
 			return false;
 		if (title == null) {
 			if (other.title != null)

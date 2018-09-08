@@ -21,6 +21,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.TrackPositionChange
 import me.steffenjacobs.effectivemusic.frontend.client.event.VolumeChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.io.BrowseFileEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.AddToPlaylistEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.GotoPlaylistPositionEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlayerInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlaylistInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshTrackInformationEvent;
@@ -62,6 +63,7 @@ public class WebAppController {
 		eventBus.addHandler(BrowseFileEvent.TYPE, event -> sendRequest("http://localhost:8081/files/browse?searchText=" + event.getPath(), true, event.getCallback()));
 		eventBus.addHandler(SearchEvent.TYPE, event -> sendRequest("http://localhost:8081/files/search?search=" + event.getSearchText(), false, event.getCallback()));
 		eventBus.addHandler(AddToPlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/enquene?path=" + event.getPath(), true, event.getCallback()));
+		eventBus.addHandler(GotoPlaylistPositionEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/position?position=" + event.getPosition(), true));
 	}
 
 	private void sendRequest(String uri, boolean post) {

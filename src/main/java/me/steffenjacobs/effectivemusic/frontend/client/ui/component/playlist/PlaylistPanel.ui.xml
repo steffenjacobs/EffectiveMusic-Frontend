@@ -4,7 +4,7 @@
 	<ui:with field='res'
 		type='me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources.RES' />
 
-	<g:HTMLPanel>
-		<div class=" {res.style.contentPanel} {res.style.playlistBackground} {res.style.backgroundColor}" ui:field="panelUi"></div>
-	</g:HTMLPanel>
+	<g:HTMLPanel
+		addStyleNames=" {res.style.contentPanel} {res.style.playlistBackground} {res.style.backgroundColor}"
+		ui:field="panelUi" />
 </ui:UiBinder> 

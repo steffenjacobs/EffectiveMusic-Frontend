@@ -4,16 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Element;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
 
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
-import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDTO;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackWithPathImpl;
 
 /** @author Steffen Jacobs */
 public class PlaylistPanel extends Composite {
@@ -24,47 +27,59 @@ public class PlaylistPanel extends Composite {
 	}
 
 	@UiField
-	DivElement panelUi;
+	HTMLPanel panelUi;
 
-	private LiveTrackDTO currentlyPlaying;
-	private Map<LiveTrackDTO, Element> playlistElements;
+	private TrackWithPathImpl currentlyPlaying;
+	private Map<TrackWithPathImpl, FlowPanel> playlistElements;
+	private PlaylistManager playlistManager;
 
 	public PlaylistPanel() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public void setCurrentlyPlaying(LiveTrackDTO liveTrackDTO) {
-		Element elem = playlistElements.get(currentlyPlaying);
+	public void setCurrentlyPlaying(TrackWithPathImpl liveTrackDTO) {
+		FlowPanel elem = playlistElements.get(currentlyPlaying);
 		if (currentlyPlaying != null) {
-			elem.removeClassName(EffectiveMusicResources.INSTANCE.style().playingTrack());
+			elem.removeStyleName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 		}
 		elem = playlistElements.get(liveTrackDTO);
 		currentlyPlaying = liveTrackDTO;
-		elem.addClassName(EffectiveMusicResources.INSTANCE.style().playingTrack());
+		elem.addStyleName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 	}
 
-	public void setPlaylist(Iterable<LiveTrackDTO> tracks) {
+	public void setPlaylist(Iterable<TrackWithPathImpl> tracks) {
 		playlistElements = new HashMap<>();
-		for (LiveTrackDTO track : tracks) {
-			final Element elem = createTrackItem(track);
-			panelUi.appendChild(elem);
+		for (TrackWithPathImpl track : tracks) {
+			final FlowPanel elem = createTrackItem(track);
+			panelUi.add(elem);
 			playlistElements.put(track, elem);
 			if (track.equals(currentlyPlaying)) {
-				elem.addClassName(EffectiveMusicResources.INSTANCE.style().playingTrack());
+				elem.addStyleName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 			}
 		}
-
 	}
 
-	private Element createTrackItem(LiveTrackDTO track) {
-		Element span = DOM.createDiv();
-		span.addClassName(EffectiveMusicResources.INSTANCE.style().track());
-		span.setInnerHTML(FormattingUtils.formatTrackForPlaylist(track));
-		return span;
+	private FlowPanel createTrackItem(TrackWithPathImpl track) {
+		FlowPanel item = new FlowPanel();
+		item.sinkEvents(Event.ONCLICK);
+		item.addHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				playlistManager.elementClicked(track);
+			}
+		}, ClickEvent.getType());
+		item.addStyleName(EffectiveMusicResources.INSTANCE.style().track());
+		item.add(new Label(FormattingUtils.formatTrackForPlaylist(track.getTrack())));
+		return item;
 	}
 
 	public void clear() {
-		panelUi.removeAllChildren();
+		panelUi.clear();
+	}
+
+	public void setManager(PlaylistManager playlistManager) {
+		this.playlistManager = playlistManager;
 	}
 
 }

@@ -1,18 +1,26 @@
 package me.steffenjacobs.effectivemusic.frontend.common.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class PlaylistImpl implements PlaylistDto {
+public class PlaylistImpl {
 
-	private List<TrackWrapperDto> tracks;
+	private List<TrackWithPathImpl> tracks = new ArrayList<>();
 
-	@Override
-	public void setTracks(List<TrackWrapperDto> tracks) {
+	public PlaylistImpl(PlaylistDto dto) {
+		for (TrackWrapperDto track : dto.getTracks()) {
+			tracks.add(new TrackWithPathImpl(track.getPath(), new LiveTrackImpl(track.getTrackDTO())));
+		}
+	}
+
+	public PlaylistImpl() {
+	}
+
+	public void setTracks(List<TrackWithPathImpl> tracks) {
 		this.tracks = tracks;
 	}
 
-	@Override
-	public List<TrackWrapperDto> getTracks() {
+	public List<TrackWithPathImpl> getTracks() {
 		return tracks;
 	}
 }
