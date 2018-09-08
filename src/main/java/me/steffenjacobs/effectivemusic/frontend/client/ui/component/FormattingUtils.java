@@ -24,8 +24,8 @@ public class FormattingUtils {
 
 	public static String formatTime(long timeInMillis) {
 		timeInMillis /= 1000;
-		long hours = timeInMillis / 360;
-		long minutes = (timeInMillis % 360) / 60;
+		long hours = timeInMillis / 3600;
+		long minutes = (timeInMillis % 3600) / 60;
 		long seconds = timeInMillis % 360 % 60;
 		return hours > 0 ? templates.formatTimestamp(DOUBLE_DIGITS.format(hours), DOUBLE_DIGITS.format(minutes), DOUBLE_DIGITS.format(seconds)).asString()
 				: templates.formatTimestampSmall(DOUBLE_DIGITS.format(minutes), DOUBLE_DIGITS.format(seconds)).asString();
