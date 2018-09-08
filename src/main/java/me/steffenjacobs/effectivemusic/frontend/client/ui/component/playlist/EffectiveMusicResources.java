@@ -50,5 +50,9 @@ public class EffectiveMusicResources {
 		String contentPanel();
 
 		String contextMenuButton();
+		
+		String fullsizeAbsolute();
+		
+		String fullsize();
 	}
 }

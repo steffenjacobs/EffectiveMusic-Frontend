@@ -4,7 +4,10 @@
 	<ui:with field='res'
 		type='me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources.RES' />
 
-	<g:HTMLPanel
-		addStyleNames=" {res.style.contentPanel} {res.style.playlistBackground} {res.style.backgroundColor}"
-		ui:field="panelUi" />
+	<g:HTMLPanel styleName="{res.style.fullsizeAbsolute}">
+		<g:ScrollPanel
+			addStyleNames="{res.style.contentPanel} {res.style.playlistBackground} {res.style.backgroundColor}">
+			<g:HTMLPanel ui:field="panelUi" styleName="{res.style.fullsize}" />
+		</g:ScrollPanel>
+	</g:HTMLPanel>
 </ui:UiBinder> 
