@@ -5,7 +5,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootLayoutPanel;
 
 import me.steffenjacobs.effectivemusic.frontend.client.controller.WebAppController;
-import me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.MainPanel;
 
 /**
@@ -24,8 +23,6 @@ public class GwtWebApp implements EntryPoint {
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
-		// ensure resources are injected
-		ApplicationResources.INSTANCE.style().ensureInjected();
 		// get controler from gin jector
 		WebAppController controller = injector.getWebAppController();
 		// bind event handlers

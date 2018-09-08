@@ -5,7 +5,6 @@ import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
 import me.steffenjacobs.effectivemusic.frontend.client.controller.WebAppController;
-import me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources;
 import me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.MainPanel;
 
@@ -13,8 +12,6 @@ import me.steffenjacobs.effectivemusic.frontend.client.ui.MainPanel;
 public interface GwtWebAppGinjector extends Ginjector {
 
 	public SimpleEventBus getEventBus();
-
-	public ApplicationResources getApplicationResources();
 
 	public EffectiveMusicMessages getMessages();
 

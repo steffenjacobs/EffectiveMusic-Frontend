@@ -16,7 +16,7 @@
 				<c:browser.BrowserPanel ui:field="browserPanelUi" />
 			</div>
 			<div
-				style="width: 19%;display:inline-block; position: absolute; top: 0px; bottom: 0px; height: 100%;">
+				style="width: 20%;display:inline-block; position: absolute; top: 0px; bottom: 0px; height: 100%;">
 				<c:playlist.PlaylistPanel ui:field="playlistPanelUi" />
 			</div>
 		</div>
