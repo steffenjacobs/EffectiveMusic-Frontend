@@ -11,6 +11,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
@@ -20,6 +21,7 @@ import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 import me.steffenjacobs.effectivemusic.frontend.client.controller.MusicAutobeanFactory;
 import me.steffenjacobs.effectivemusic.frontend.client.event.search.SearchEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefilebrowser.RemoteFileBrowserDialog;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackListDTO;
 
@@ -42,12 +44,17 @@ public class BrowserPanel extends Composite {
 	@UiField
 	TextBox searchBoxUi;
 
+	@UiField
+	Label searchResultCountUi;
+
 	SimpleEventBus eventBus;
 
-	final BrowserCellTable browserCellTable = new BrowserCellTable();
+	final BrowserCellTable browserCellTable;
 
 	public BrowserPanel() {
+		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		browserCellTable = new BrowserCellTable(this);
 		contentPanelUi.setWidget(browserCellTable);
 		searchBoxUi.getElement().setPropertyString("placeholder", "Search...");
 	}
@@ -55,24 +62,26 @@ public class BrowserPanel extends Composite {
 	public void setEventBus(SimpleEventBus evtBus) {
 		this.eventBus = evtBus;
 		browserCellTable.setEventBus(evtBus);
-		eventBus.fireEvent(new SearchEvent("", new DefaultRequestCallback() {
-			@Override
-			public void onResponseReceived(Request request, Response response) {
-				AutoBean<TrackListDTO> bean = AutoBeanCodex.decode(factory, TrackListDTO.class, response.getText());
-				final TrackListDTO autoBeanTracklist = bean.as();
-				browserCellTable.updateTracks(autoBeanTracklist.getTracks());
-			}
-		}));
+		refreshUi("");
+	}
+
+	public void setResultCount(int count) {
+		searchResultCountUi.setText("(" + count + " Tracks)");
 	}
 
 	@UiHandler("searchBoxUi")
 	void onKeyUp(KeyUpEvent e) {
-		eventBus.fireEvent(new SearchEvent(searchBoxUi.getText(), new DefaultRequestCallback() {
+		refreshUi(searchBoxUi.getText());
+	}
+
+	private void refreshUi(String searchText) {
+		eventBus.fireEvent(new SearchEvent(searchText, new DefaultRequestCallback() {
 			@Override
 			public void onResponseReceived(Request request, Response response) {
 				AutoBean<TrackListDTO> bean = AutoBeanCodex.decode(factory, TrackListDTO.class, response.getText());
 				final TrackListDTO autoBeanTracklist = bean.as();
 				browserCellTable.updateTracks(autoBeanTracklist.getTracks());
+				setResultCount(autoBeanTracklist.getTracks().size());
 			}
 		}));
 	}

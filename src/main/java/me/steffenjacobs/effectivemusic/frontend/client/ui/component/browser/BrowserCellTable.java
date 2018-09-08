@@ -32,11 +32,17 @@ public class BrowserCellTable implements IsWidget {
 
 	private SimpleEventBus eventBus;
 
-	public BrowserCellTable() {
+	public BrowserCellTable(BrowserPanel parentPanel) {
 		cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
 		final MultiSelectionModel<TrackDTO> multiSelectionModel = new MultiSelectionModel<>();
+		multiSelectionModel.addSelectionChangeHandler(e -> parentPanel.setResultCount(multiSelectionModel.getSelectedSet().size()));
 		cellTable.setSelectionModel(multiSelectionModel);
+
+		titleColumn.setCellStyleNames(EffectiveMusicResources.INSTANCE.style().columnWithRightBorder());
+		artistColumn.setCellStyleNames(EffectiveMusicResources.INSTANCE.style().columnWithRightBorder());
+		lengthColumn.setCellStyleNames(EffectiveMusicResources.INSTANCE.style().columnWithRightBorder());
+		albumColumn.setCellStyleNames(EffectiveMusicResources.INSTANCE.style().columnWithRightBorder());
 
 		cellTable.addColumn(titleColumn, "Title");
 		cellTable.addColumn(artistColumn, "Artist");

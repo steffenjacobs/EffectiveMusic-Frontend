@@ -6,10 +6,8 @@
 		type="me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages"
 		field="messages" />
 
-
 	<g:HTMLPanel>
-		<div style="position: relative; height: 100%;">
-			<!-- Main Control Panel -->
+		<div style="position: relative; height: 100%; background-color: #657192">
 			<div
 				style="width: 80%;display:inline-block;position: relative; height: 100%">
 				<div style="margin-bottom: 10px;">

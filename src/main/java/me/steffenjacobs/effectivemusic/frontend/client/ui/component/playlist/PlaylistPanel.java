@@ -9,6 +9,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -29,11 +30,18 @@ public class PlaylistPanel extends Composite {
 	@UiField
 	HTMLPanel panelUi;
 
+	@UiField
+	Button loadPlaylistUi;
+
+	@UiField
+	Button storePlaylistUi;
+
 	private TrackWithPathImpl currentlyPlaying;
 	private Map<TrackWithPathImpl, FlowPanel> playlistElements;
 	private PlaylistManager playlistManager;
 
 	public PlaylistPanel() {
+		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

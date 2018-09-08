@@ -25,15 +25,15 @@
 		<!-- main toolbox -->
 		<div class="{res2.style.contentPanel} {res2.style.backgroundColor}">
 			<g:TextBox styleName="{res2.style.secondColor} {res2.style.trackTitleTextBox}" ui:field="textBox" />
-			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor}"
+			<g:Button styleName="{res2.style.sendButton} {res2.style.secondColor}"
 				text="Start Youtube" ui:field="startYoutubeButton" />
-			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor}"
+			<g:Button styleName="{res2.style.sendButton} {res2.style.secondColor}"
 				text="{messages.stopButton}" ui:field="stopButton" />
-			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor}"
+			<g:Button styleName="{res2.style.sendButton} {res2.style.secondColor}"
 				text="{messages.startButton}" ui:field="startPauseButton" />
-			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor}"
+			<g:Button styleName="{res2.style.sendButton} {res2.style.secondColor}"
 				text="{messages.previousButton}" ui:field="previousButton" />
-			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor}"
+			<g:Button styleName="{res2.style.sendButton} {res2.style.secondColor}"
 				text="{messages.nextButton}" ui:field="nextButton" />
 			<div class="{style.inline}">
 				<div class="{style.inline}">

@@ -27,6 +27,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.AddToPlayl
 import me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SimpleSlider;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SliderEventHandler;
 
@@ -79,6 +80,7 @@ public class ControlPanel extends Composite {
 	private boolean paused = false;
 
 	public ControlPanel() {
+		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

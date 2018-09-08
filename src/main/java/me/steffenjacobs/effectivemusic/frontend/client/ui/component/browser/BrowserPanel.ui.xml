@@ -6,10 +6,6 @@
 	<ui:with
 		type="me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages"
 		field="messages" />
-	<!-- import for resources bundle -->
-	<ui:with
-		type="me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources"
-		field="res" />
 	<ui:with
 		type="me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources.RES"
 		field="res2" />
@@ -34,11 +30,12 @@
 		<g:HTMLPanel addStyleNames="{res2.style.contentPanel} {res2.style.backgroundColor}">
 			<div style="height: 60px;">
 				<g:Button
-					styleName="{res.style.sendButton} {res2.style.secondColor} {style.inline}"
+					styleName="{res2.style.sendButton} {res2.style.secondColor} {style.inline}"
 					text="Import" ui:field="importButtonUi" />
 				<g:TextBox
 					styleName="{res2.style.secondColor} {res2.style.trackTitleTextBox} {style.inline}"
 					ui:field="searchBoxUi" />
+				<g:Label styleName="{style.inline}" ui:field="searchResultCountUi" />
 			</div>
 			<div style="height: 100%; position: relative;">
 				<div style="height: 89%;">

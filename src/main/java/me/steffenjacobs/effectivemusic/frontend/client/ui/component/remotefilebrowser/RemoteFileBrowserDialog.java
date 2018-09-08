@@ -11,7 +11,6 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
-import me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
 
 /** @author Steffen Jacobs */
@@ -19,7 +18,6 @@ public class RemoteFileBrowserDialog extends DialogBox {
 
 	public RemoteFileBrowserDialog(final Consumer<String> consumer, final SimpleEventBus eventBus) {
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
-		ApplicationResources.INSTANCE.style().ensureInjected();
 		super.setText("Choose a directory");
 
 		final RemoteFileBrowser remoteFileBrowser = new RemoteFileBrowser();
@@ -42,10 +40,10 @@ public class RemoteFileBrowserDialog extends DialogBox {
 			}
 		});
 
-		okButton.addStyleName(ApplicationResources.INSTANCE.style().sendButton());
+		okButton.addStyleName(EffectiveMusicResources.INSTANCE.style().sendButton());
 		okButton.addStyleName(EffectiveMusicResources.INSTANCE.style().secondColor());
 
-		cancelButton.addStyleName(ApplicationResources.INSTANCE.style().sendButton());
+		cancelButton.addStyleName(EffectiveMusicResources.INSTANCE.style().sendButton());
 		cancelButton.addStyleName(EffectiveMusicResources.INSTANCE.style().secondColor());
 
 		VerticalPanel panel = new VerticalPanel();

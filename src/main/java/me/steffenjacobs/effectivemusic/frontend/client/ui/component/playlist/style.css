@@ -1,3 +1,38 @@
+.sendButton {
+	font-family: arial, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	height: 40px;
+	margin: 7px 7px;
+	padding: 0 5px;
+	background-color: #F5F5F5;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 3px;
+	color: #666666;
+	cursor: pointer;
+	min-width: 48px;
+	text-align: center;
+}
+
+.sendButton:hover {
+	font-family: arial, sans-serif;
+	background-color: #F8F8F8;
+	border: 1px solid #C6C6C6;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	color: #333333;
+}
+
+.sendButton:focus {
+	border: 1px solid #4D90FE;
+	outline: medium none;
+}
+
+.smallButton{
+	height: 20px;
+	width: 20px;
+	min-width: 20px;
+}
+
 .playingTrack {
 	background-color: #636f8d;
 }
@@ -27,6 +62,20 @@
 
 .secondColor:active {
 	background-color: #f1a369;
+}
+
+.secondColorInverted {
+	background: #c2c8d6;
+	color: #464e64;
+}
+
+.secondColorInverted:hover {
+	background-color: #cfd3de;
+	border: none;
+}
+
+.secondColorInverted:active {
+	background-color: #e2e4eb;
 }
 
 .thirdColor {
@@ -108,6 +157,7 @@
 	border-radius: 10px;
 	padding: 10px;
 	height: 100%;
+	box-shadow: 1px 1px 6px #000;
 }
 
 .contextMenuButton {
@@ -125,7 +175,7 @@
 }
 
 .fullsizeAbsolute {
-	position: absolute;
+	position: absolute !important;
 	top: 0px;
 	left: 0px;
 	bottom: 50px;
@@ -135,4 +185,15 @@
 .fullsize {
 	width: 100%;
 	height: 100%;
+}
+
+.columnWithRightBorder {
+	border-right: 1px solid #c2c8d6;
+}
+
+.marginBottom20 {
+	margin-bottom: 20px;
+}
+.fontSize17{
+	font-size: 17px;
 }

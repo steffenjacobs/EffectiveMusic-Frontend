@@ -17,6 +17,4 @@ public interface GwtWebAppStyles extends CssResource {
 	String todoPanel();
 	
 	String todoText();
-	
-	String sendButton();
 }

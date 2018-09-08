@@ -54,5 +54,17 @@ public class EffectiveMusicResources {
 		String fullsizeAbsolute();
 		
 		String fullsize();
+		
+		String columnWithRightBorder();
+		
+		String marginBottom20();
+		
+		String sendButton();
+		
+		String fontSize17();
+		
+		String secondColorInverted();
+		
+		String smallButton();
 	}
 }
