@@ -14,7 +14,7 @@ import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
 import me.steffenjacobs.effectivemusic.frontend.client.controller.Base64Encoder;
-import me.steffenjacobs.effectivemusic.frontend.client.event.StartMusicEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.AddToPlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDTO;
 
@@ -37,7 +37,7 @@ public class BrowserCellTable implements IsWidget {
 			public void onSelectionChange(SelectionChangeEvent event) {
 				TrackDTO selectedTrack = singleSelectionModel.getSelectedObject();
 				if (selectedTrack != null) {
-					eventBus.fireEvent(new StartMusicEvent(new String(Base64Encoder.encode(selectedTrack.getPath().getBytes())), null));
+					eventBus.fireEvent(new AddToPlaylistEvent(new String(Base64Encoder.encode(selectedTrack.getPath().getBytes())), null));
 				}
 			}
 		});
