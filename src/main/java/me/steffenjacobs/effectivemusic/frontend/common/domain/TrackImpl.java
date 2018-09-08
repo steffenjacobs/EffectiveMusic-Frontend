@@ -1,27 +1,27 @@
 package me.steffenjacobs.effectivemusic.frontend.common.domain;
 
-public class TrackImpl implements TrackDto {
+public class TrackImpl implements LiveTrackDto {
 
 	private String artist, album, title, year, comment, track, discNo, composer, artistSort;
 	private long length;
 	private double volume, position;
 
-	public TrackImpl(TrackDto trackDto) {
-		if (trackDto == null) {
+	public TrackImpl(LiveTrackDto liveTrackDto) {
+		if (liveTrackDto == null) {
 			return;
 		}
-		this.artist = trackDto.getArtist();
-		this.album = trackDto.getAlbum();
-		this.title = trackDto.getTitle();
-		this.year = trackDto.getYear();
-		this.comment = trackDto.getComment();
-		this.track = trackDto.getTrack();
-		this.discNo = trackDto.getDisc_no();
-		this.composer = trackDto.getComposer();
-		this.artistSort = trackDto.getArtist_sort();
-		this.length = trackDto.getLength();
-		this.volume = trackDto.getVolume();
-		this.position = trackDto.getPosition();
+		this.artist = liveTrackDto.getArtist();
+		this.album = liveTrackDto.getAlbum();
+		this.title = liveTrackDto.getTitle();
+		this.year = liveTrackDto.getYear();
+		this.comment = liveTrackDto.getComment();
+		this.track = liveTrackDto.getTrack();
+		this.discNo = liveTrackDto.getDisc_no();
+		this.composer = liveTrackDto.getComposer();
+		this.artistSort = liveTrackDto.getArtist_sort();
+		this.length = liveTrackDto.getLength();
+		this.volume = liveTrackDto.getVolume();
+		this.position = liveTrackDto.getPosition();
 	}
 
 	public TrackImpl() {

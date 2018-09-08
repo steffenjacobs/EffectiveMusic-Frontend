@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
-import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDto;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDto;
 
 /** @author Steffen Jacobs */
 public class PlaylistPanel extends Composite {
@@ -27,26 +27,26 @@ public class PlaylistPanel extends Composite {
 	@UiField
 	DivElement panelUi;
 
-	private TrackDto currentlyPlaying;
-	private Map<TrackDto, Element> playlistElements;
+	private LiveTrackDto currentlyPlaying;
+	private Map<LiveTrackDto, Element> playlistElements;
 
 	public PlaylistPanel() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public void setCurrentlyPlaying(TrackDto trackDto) {
+	public void setCurrentlyPlaying(LiveTrackDto liveTrackDto) {
 		Element elem = playlistElements.get(currentlyPlaying);
 		if (currentlyPlaying != null) {
 			elem.removeClassName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 		}
-		elem = playlistElements.get(trackDto);
-		currentlyPlaying = trackDto;
+		elem = playlistElements.get(liveTrackDto);
+		currentlyPlaying = liveTrackDto;
 		elem.addClassName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 	}
 
-	public void setPlaylist(Iterable<TrackDto> tracks) {
+	public void setPlaylist(Iterable<LiveTrackDto> tracks) {
 		playlistElements = new HashMap<>();
-		for (TrackDto track : tracks) {
+		for (LiveTrackDto track : tracks) {
 			final Element elem = createTrackItem(track);
 			panelUi.appendChild(elem);
 			playlistElements.put(track, elem);
@@ -58,7 +58,7 @@ public class PlaylistPanel extends Composite {
 
 	}
 
-	private Element createTrackItem(TrackDto track) {
+	private Element createTrackItem(LiveTrackDto track) {
 		Element span = DOM.createDiv();
 		span.addClassName(EffectiveMusicResources.INSTANCE.style().track());
 		span.setInnerHTML(FormattingUtils.formatTrackForPlaylist(track));

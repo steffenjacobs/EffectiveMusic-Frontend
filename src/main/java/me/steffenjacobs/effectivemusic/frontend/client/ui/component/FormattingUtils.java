@@ -4,7 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.NumberFormat;
 
 import me.steffenjacobs.effectivemusic.frontend.client.resource.MusicTemplates;
-import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDto;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDto;
 
 /** @author Steffen Jacobs */
 public class FormattingUtils {
@@ -31,7 +31,7 @@ public class FormattingUtils {
 				: templates.formatTimestampSmall(DOUBLE_DIGITS.format(minutes), DOUBLE_DIGITS.format(seconds)).asString();
 	}
 
-	public static String formatTrackForPlaylist(TrackDto track) {
+	public static String formatTrackForPlaylist(LiveTrackDto track) {
 		StringBuilder sb = new StringBuilder();
 		if (track.getTitle() != null) {
 			sb.append(track.getTitle());
