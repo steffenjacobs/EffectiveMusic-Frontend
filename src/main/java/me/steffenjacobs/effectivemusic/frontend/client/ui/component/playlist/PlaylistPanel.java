@@ -1,9 +1,12 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -36,6 +39,9 @@ public class PlaylistPanel extends Composite {
 	@UiField
 	Button storePlaylistUi;
 
+	@UiField
+	DivElement playlistHeaderUi;
+
 	private TrackWithPathImpl currentlyPlaying;
 	private Map<TrackWithPathImpl, FlowPanel> playlistElements;
 	private PlaylistManager playlistManager;
@@ -43,6 +49,7 @@ public class PlaylistPanel extends Composite {
 	public PlaylistPanel() {
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+		playlistHeaderUi.setInnerHTML("Playlist");
 	}
 
 	public void setCurrentlyPlaying(TrackWithPathImpl liveTrackDTO) {
@@ -55,7 +62,7 @@ public class PlaylistPanel extends Composite {
 		elem.addStyleName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 	}
 
-	public void setPlaylist(Iterable<TrackWithPathImpl> tracks) {
+	public void setPlaylist(Collection<TrackWithPathImpl> tracks) {
 		playlistElements = new HashMap<>();
 		for (TrackWithPathImpl track : tracks) {
 			final FlowPanel elem = createTrackItem(track);
@@ -65,7 +72,9 @@ public class PlaylistPanel extends Composite {
 				elem.addStyleName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 			}
 		}
+		playlistHeaderUi.setInnerHTML("Playlist (" + FormattingUtils.formatTime(tracks.stream().collect(Collectors.summingLong(t -> t.getTrack().getLength()))) + ")");
 	}
+	
 
 	private FlowPanel createTrackItem(TrackWithPathImpl track) {
 		FlowPanel item = new FlowPanel();

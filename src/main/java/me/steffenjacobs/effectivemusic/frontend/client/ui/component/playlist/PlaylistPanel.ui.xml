@@ -8,7 +8,7 @@
 		<div
 			class="{res.style.contentPanel} {res.style.playlistBackground} {res.style.backgroundColor}">
 			<div>
-				<div style="font-weight: 700;display:inline-block;">Playlists</div>
+				<div style="font-weight: 700;display:inline-block;" ui:field="playlistHeaderUi"/>
 				<g:Button
 					styleName="{res.style.sendButton} {res.style.secondColorInverted} {res.style.smallButton} {res.style.fontSize17}"
 					ui:field="loadPlaylistUi">⤒</g:Button>
