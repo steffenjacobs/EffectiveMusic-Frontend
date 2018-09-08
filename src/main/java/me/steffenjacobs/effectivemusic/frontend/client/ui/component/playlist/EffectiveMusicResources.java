@@ -66,5 +66,7 @@ public class EffectiveMusicResources {
 		String secondColorInverted();
 		
 		String smallButton();
+		
+		String spacerLine();
 	}
 }

@@ -27,7 +27,7 @@
 	outline: medium none;
 }
 
-.smallButton{
+.smallButton {
 	height: 20px;
 	width: 20px;
 	min-width: 20px;
@@ -93,7 +93,10 @@
 
 .playlistBackground {
 	height: 100%;
-	font-size: 1.5em;
+	font-size: 1.3em;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 
 .controlFirstCol {
@@ -194,6 +197,15 @@
 .marginBottom20 {
 	margin-bottom: 20px;
 }
-.fontSize17{
+
+.fontSize17 {
 	font-size: 17px;
+}
+
+.spacerLine {
+	border-bottom: 2px solid #c2c8d6;
+	margin-bottom: 5px;
+	padding-bottom: 5px;
+	margin-left: -10px;
+	margin-right: -10px;
 }
