@@ -2,9 +2,11 @@ package me.steffenjacobs.effectivemusic.frontend.client.ui.component.browser;
 
 import java.util.List;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
+import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.google.gwt.user.client.ui.Widget;
@@ -21,8 +23,8 @@ import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDTO;
  */
 public class BrowserCellTable implements IsWidget {
 
-	private final CellTable<TrackDTO> cellTable = new CellTable<>();
-	
+	private final CellTable<TrackDTO> cellTable = new CellTable<>(200, (CellTable.Resources) GWT.create(ImprovedCellTableResources.class));
+
 	private SimpleEventBus eventBus;
 
 	public BrowserCellTable() {
@@ -43,7 +45,12 @@ public class BrowserCellTable implements IsWidget {
 		cellTable.addColumn(titleColumn, "Title");
 		cellTable.addColumn(artistColumn, "Artist");
 		cellTable.addColumn(lengthColumn, "Length");
+		cellTable.addColumn(albumColumn, "Album");
+		cellTable.addColumn(bitrateColumn, "Bitrate");
 
+		SimplePager pager = new SimplePager();
+		pager.setDisplay(cellTable);
+		pager.setPageSize(200);
 	}
 
 	public void updateTracks(List<TrackDTO> tracks) {
@@ -67,6 +74,18 @@ public class BrowserCellTable implements IsWidget {
 		@Override
 		public String getValue(TrackDTO track) {
 			return FormattingUtils.formatTime(track.getLength());
+		}
+	};
+	private final TextColumn<TrackDTO> albumColumn = new TextColumn<TrackDTO>() {
+		@Override
+		public String getValue(TrackDTO track) {
+			return track.getAlbum();
+		}
+	};
+	private final TextColumn<TrackDTO> bitrateColumn = new TextColumn<TrackDTO>() {
+		@Override
+		public String getValue(TrackDTO track) {
+			return track.getBitrate() + "kbit/s";
 		}
 	};
 

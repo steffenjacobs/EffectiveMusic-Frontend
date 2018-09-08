@@ -23,7 +23,7 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<!-- main toolbox -->
-		<div class="{res2.style.controlPanel} {res2.style.backgroundColor}">
+		<div class="{res2.style.contentPanel} {res2.style.backgroundColor}">
 			<g:TextBox styleName="{res2.style.secondColor} {res2.style.trackTitleTextBox}" ui:field="textBox" />
 			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor}"
 				text="{messages.stopButton}" ui:field="stopButton" />

@@ -11,7 +11,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.ScrollPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.web.bindery.autobean.shared.AutoBean;
@@ -37,7 +37,7 @@ public class BrowserPanel extends Composite {
 	Button importButtonUi;
 
 	@UiField
-	SimplePanel contentPanelUi;
+	ScrollPanel contentPanelUi;
 
 	@UiField
 	TextBox searchBoxUi;
@@ -55,6 +55,14 @@ public class BrowserPanel extends Composite {
 	public void setEventBus(SimpleEventBus evtBus) {
 		this.eventBus = evtBus;
 		browserCellTable.setEventBus(evtBus);
+		eventBus.fireEvent(new SearchEvent("", new DefaultRequestCallback() {
+			@Override
+			public void onResponseReceived(Request request, Response response) {
+				AutoBean<TrackListDTO> bean = AutoBeanCodex.decode(factory, TrackListDTO.class, response.getText());
+				final TrackListDTO autoBeanTracklist = bean.as();
+				browserCellTable.updateTracks(autoBeanTracklist.getTracks());
+			}
+		}));
 	}
 
 	@UiHandler("searchBoxUi")

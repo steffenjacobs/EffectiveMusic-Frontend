@@ -6,7 +6,6 @@ import java.util.Map;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.DOM;
@@ -54,7 +53,6 @@ public class PlaylistPanel extends Composite {
 				elem.addClassName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 			}
 		}
-		panelUi.getParentElement().getParentElement().getStyle().setHeight(100, Unit.PC);
 
 	}
 

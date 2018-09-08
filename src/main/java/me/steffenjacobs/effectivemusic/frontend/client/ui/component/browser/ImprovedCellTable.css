@@ -1,0 +1,53 @@
+.cellTableWidget{
+	width: 100%;
+}
+
+.cellTableCell {
+background-color: #464e64;
+	color: #c2c8d6;
+	border: 1px solid #c2c8d6
+}
+
+.cellTableHeader {
+	color: #c2c8d6;
+    background-color: #464e64;
+    text-shadow: none;
+    font-weight: bold;
+}
+.cellTableFirstColumnHeader {
+	color: #c2c8d6;
+}
+.cellTableLastColumnHeader {
+	color: #c2c8d6;
+}
+.cellTableCell {
+	color: #c2c8d6;
+}
+.cellTableEvenRow {
+    background-color: #464e64;
+}
+.cellTableOddRow {
+    background-color: #464e64;
+}
+.cellTableSelectedRow {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.cellTableSelectedRowCell {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.cellTableHoveredRow {
+    background-color: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+}
+.cellTableHoveredRowCell {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.cellTableKeyboardSelectedRow {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.cellTableKeyboardSelectedRowCell {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.cellTableKeyboardSelectedCell {
+    background-color: rgba(255, 255, 255, 0.2);
+}

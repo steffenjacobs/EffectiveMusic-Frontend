@@ -6,33 +6,23 @@
 		type="me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages"
 		field="messages" />
 
-	<g:DockLayoutPanel>
-		<!-- Top panel -->
-		<g:north size="350">
-			<g:HTMLPanel>
-				<h1>
-					<g:InlineLabel text="{messages.titleMessage}" />
-				</h1>
-				<!-- Main Control Panel -->
-				<c:controlpanel.ControlPanel ui:field="controlPanel" />
-			</g:HTMLPanel>
-		</g:north>
 
-		<g:west size="330">
-			<g:FlowPanel></g:FlowPanel>
-		</g:west>
-		<g:center size="330">
-			<g:FlowPanel>
-				<c:browser.BrowserPanel ui:field="browserPanelUi" />
-			</g:FlowPanel>
-		</g:center>
-
-		<!-- Playlist 50em -->
-		<g:east size="600">
-			<g:ScrollPanel>
+	<g:HTMLPanel>
+		<div style="position: relative; height: 100%;">
+			<!-- Main Control Panel -->
+			<div style="width: 80%;display:inline-block;position: relative; height: 100%">
+				<div style="margin-bottom: 10px;">
+					<c:controlpanel.ControlPanel ui:field="controlPanel" />
+				</div>
+				<div style="position: relative; height: 100%;">
+					<c:browser.BrowserPanel ui:field="browserPanelUi" />
+				</div>
+			</div>
+			<div
+				style="width: 19%;display:inline-block; position: absolute; top: 0px; bottom: 0px; height: 100%;">
 				<c:playlist.PlaylistPanel ui:field="playlistPanelUi"
 					height="100%" />
-			</g:ScrollPanel>
-		</g:east>
-	</g:DockLayoutPanel>
+			</div>
+		</div>
+	</g:HTMLPanel>
 </ui:UiBinder> 

@@ -102,3 +102,10 @@
 .dialogPanel{
       border: 2px inset #636f8d;
 }
+
+.contentPanel {
+	margin: 10px;
+	border-radius: 10px;
+	padding: 10px;
+	height:100%;
+}
