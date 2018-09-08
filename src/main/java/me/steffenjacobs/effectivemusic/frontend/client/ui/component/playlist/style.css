@@ -191,7 +191,7 @@
 }
 
 .columnWithRightBorder {
-	border-right: 1px solid #c2c8d6;
+	border-right: 1px solid #c2c8d6 !important;
 }
 
 .marginBottom20 {

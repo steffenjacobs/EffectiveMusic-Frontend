@@ -33,6 +33,7 @@ public class BrowserCellTable implements IsWidget {
 	private SimpleEventBus eventBus;
 
 	public BrowserCellTable(BrowserPanel parentPanel) {
+		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
 		final MultiSelectionModel<TrackDTO> multiSelectionModel = new MultiSelectionModel<>();
