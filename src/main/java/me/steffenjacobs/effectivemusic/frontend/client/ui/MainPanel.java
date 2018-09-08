@@ -27,7 +27,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.Pla
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefilebrowser.RemoteFileBrowserDialog;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlayerInformationDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
-import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDto;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackImpl;
 
 public class MainPanel extends Composite {
@@ -53,7 +53,7 @@ public class MainPanel extends Composite {
 
 	private Timer t = new Timer() {
 
-		private LiveTrackDto lastTrack;
+		private LiveTrackDTO lastTrack;
 
 		@Override
 		public void run() {
@@ -65,9 +65,9 @@ public class MainPanel extends Composite {
 						controlPanel.clearTextFields();
 						return;
 					} else {
-						AutoBean<LiveTrackDto> bean = AutoBeanCodex.decode(factory, LiveTrackDto.class, response.getText());
-						final LiveTrackDto autoBeanTrack = bean.as();
-						LiveTrackDto dto = new TrackImpl(autoBeanTrack);
+						AutoBean<LiveTrackDTO> bean = AutoBeanCodex.decode(factory, LiveTrackDTO.class, response.getText());
+						final LiveTrackDTO autoBeanTrack = bean.as();
+						LiveTrackDTO dto = new TrackImpl(autoBeanTrack);
 						if (dto.equals(lastTrack)) {
 							controlPanel.setPosition(dto.getPosition(), dto.getLength());
 							return;

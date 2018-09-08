@@ -3,11 +3,11 @@ package me.steffenjacobs.effectivemusic.frontend.common.domain;
 /** @author Steffen Jacobs */
 public interface TrackWrapperDto {
 
-	LiveTrackDto getTrackDTO();
+	LiveTrackDTO getTrackDTO();
 
 	String getPath();
 
-	void setTrackDTO(LiveTrackDto trackDTO);
+	void setTrackDTO(LiveTrackDTO trackDTO);
 
 	void setPath(String path);
 

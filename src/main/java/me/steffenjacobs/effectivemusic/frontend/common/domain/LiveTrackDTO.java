@@ -1,7 +1,7 @@
 package me.steffenjacobs.effectivemusic.frontend.common.domain;
 
 /** @author Steffen Jacobs */
-public interface LiveTrackDto {
+public interface LiveTrackDTO {
 
 	String getArtist();
 

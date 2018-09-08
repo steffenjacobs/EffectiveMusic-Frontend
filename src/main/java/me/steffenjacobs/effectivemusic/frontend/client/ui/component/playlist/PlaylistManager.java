@@ -4,14 +4,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
-import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDto;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackImpl;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackWrapperDto;
 
 /** @author Steffen Jacobs */
 public class PlaylistManager {
 
-	private final List<LiveTrackDto> playlist = new LinkedList<>();
+	private final List<LiveTrackDTO> playlist = new LinkedList<>();
 
 	private final PlaylistPanel panel;
 
@@ -19,17 +19,17 @@ public class PlaylistManager {
 		this.panel = panel;
 	}
 
-	public void add(LiveTrackDto track) {
+	public void add(LiveTrackDTO track) {
 		playlist.add(track);
 		refreshUi();
 	}
 
-	public void remove(LiveTrackDto track) {
+	public void remove(LiveTrackDTO track) {
 		playlist.remove(track);
 		refreshUi();
 	}
 
-	public void insertAtPosition(LiveTrackDto track, int position) {
+	public void insertAtPosition(LiveTrackDTO track, int position) {
 		playlist.add(position, track);
 		refreshUi();
 	}
@@ -49,7 +49,7 @@ public class PlaylistManager {
 		refreshUi();
 	}
 
-	public void setCurrentTrack(LiveTrackDto dto) {
+	public void setCurrentTrack(LiveTrackDTO dto) {
 		panel.setCurrentlyPlaying(dto);
 	}
 

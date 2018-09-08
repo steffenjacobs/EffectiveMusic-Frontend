@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
-import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDto;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDTO;
 
 /** @author Steffen Jacobs */
 public class PlaylistPanel extends Composite {
@@ -27,26 +27,26 @@ public class PlaylistPanel extends Composite {
 	@UiField
 	DivElement panelUi;
 
-	private LiveTrackDto currentlyPlaying;
-	private Map<LiveTrackDto, Element> playlistElements;
+	private LiveTrackDTO currentlyPlaying;
+	private Map<LiveTrackDTO, Element> playlistElements;
 
 	public PlaylistPanel() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	public void setCurrentlyPlaying(LiveTrackDto liveTrackDto) {
+	public void setCurrentlyPlaying(LiveTrackDTO liveTrackDTO) {
 		Element elem = playlistElements.get(currentlyPlaying);
 		if (currentlyPlaying != null) {
 			elem.removeClassName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 		}
-		elem = playlistElements.get(liveTrackDto);
-		currentlyPlaying = liveTrackDto;
+		elem = playlistElements.get(liveTrackDTO);
+		currentlyPlaying = liveTrackDTO;
 		elem.addClassName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 	}
 
-	public void setPlaylist(Iterable<LiveTrackDto> tracks) {
+	public void setPlaylist(Iterable<LiveTrackDTO> tracks) {
 		playlistElements = new HashMap<>();
-		for (LiveTrackDto track : tracks) {
+		for (LiveTrackDTO track : tracks) {
 			final Element elem = createTrackItem(track);
 			panelUi.appendChild(elem);
 			playlistElements.put(track, elem);
@@ -58,7 +58,7 @@ public class PlaylistPanel extends Composite {
 
 	}
 
-	private Element createTrackItem(LiveTrackDto track) {
+	private Element createTrackItem(LiveTrackDTO track) {
 		Element span = DOM.createDiv();
 		span.addClassName(EffectiveMusicResources.INSTANCE.style().track());
 		span.setInnerHTML(FormattingUtils.formatTrackForPlaylist(track));
