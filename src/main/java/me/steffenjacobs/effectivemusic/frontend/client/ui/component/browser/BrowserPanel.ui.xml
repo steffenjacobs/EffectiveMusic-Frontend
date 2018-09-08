@@ -11,7 +11,7 @@
 		field="res2" />
 	<ui:style>
 	.inline {
-		margin-right: 10px;
+		margin-left: 10px;
 		display: inline-block;
 		font-size: 18px;
 		vertical-align: middle;
@@ -44,10 +44,10 @@
 			addStyleNames="{res2.style.contentPanel} {res2.style.backgroundColor} {style.relativeStyle}">
 			<div style="height: 60px;">
 				<g:Button
-					styleName="{res2.style.sendButton} {res2.style.secondColor} {style.inline}"
+					styleName="{res2.style.sendButton} {res2.style.secondColor} {style.inline} {res2.style.sendButtonWithText}"
 					text="Import" ui:field="importButtonUi" />
 				<g:TextBox
-					styleName="{res2.style.secondColor} {res2.style.trackTitleTextBox} {style.inline}"
+					styleName="{res2.style.secondColor} {res2.style.trackTitleTextBox}"
 					ui:field="searchBoxUi" />
 				<g:Label styleName="{style.inline}" ui:field="searchResultCountUi" />
 			</div>

@@ -25,7 +25,7 @@
 		<!-- main toolbox -->
 		<div class="{res2.style.contentPanel} {res2.style.backgroundColor}">
 			<g:TextBox styleName="{res2.style.secondColor} {res2.style.trackTitleTextBox}" ui:field="textBox" />
-			<g:Button styleName="{res2.style.sendButton} {res2.style.secondColor}"
+			<g:Button styleName="{res2.style.sendButton} {res2.style.secondColor} {res2.style.sendButtonWithText}"
 				text="Start Youtube" ui:field="startYoutubeButton" />
 			<g:Button styleName="{res2.style.sendButton} {res2.style.secondColor}"
 				text="{messages.stopButton}" ui:field="stopButton" />

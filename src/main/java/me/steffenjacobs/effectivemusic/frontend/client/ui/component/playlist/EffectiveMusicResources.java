@@ -61,6 +61,8 @@ public class EffectiveMusicResources {
 		
 		String sendButton();
 		
+		String sendButtonWithText();
+		
 		String fontSize17();
 		
 		String secondColorInverted();

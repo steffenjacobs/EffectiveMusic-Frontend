@@ -12,6 +12,7 @@
 	cursor: pointer;
 	min-width: 48px;
 	text-align: center;
+    border: 1px solid #2e1e11;
 }
 
 .sendButton:hover {
@@ -20,6 +21,10 @@
 	border: 1px solid #C6C6C6;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 	color: #333333;
+}
+
+.sendButtonWithText:hover {
+	margin-right: 9px;
 }
 
 .sendButton:focus {
@@ -122,6 +127,11 @@
 	color: #464e64;
 	font-size: 1.5em;
 	width: 20em;
+	height: 35px;
+	vertical-align: middle;
+	padding-left: 5px;
+	margin-right: 5px;
+	border-radius: 5px;
 }
 
 .fileBrowserItemNonClickable {
