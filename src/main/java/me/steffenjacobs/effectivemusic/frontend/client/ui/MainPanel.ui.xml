@@ -23,11 +23,11 @@
 		</g:west>
 		<g:center size="330">
 			<g:FlowPanel>
-				<g:Button ui:field="remoteFileBrowserButtonUi" text="Open"/>
+				<c:browser.BrowserPanel ui:field="browserPanelUi" />
 			</g:FlowPanel>
 		</g:center>
 
-		<!-- Playlist  50em-->
+		<!-- Playlist 50em -->
 		<g:east size="600">
 			<g:ScrollPanel>
 				<c:playlist.PlaylistPanel ui:field="playlistPanelUi"

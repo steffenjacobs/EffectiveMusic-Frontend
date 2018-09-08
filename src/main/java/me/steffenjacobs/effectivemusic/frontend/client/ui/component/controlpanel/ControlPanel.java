@@ -76,7 +76,6 @@ public class ControlPanel extends Composite {
 	private boolean paused = false;
 
 	public ControlPanel() {
-		GWT.log("initing control panel");
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

@@ -1,0 +1,36 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:c="urn:import:me.steffenjacobs.effectivemusic.frontend.client.ui.component">
+	<!-- import for i18n messages -->
+	<ui:with
+		type="me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages"
+		field="messages" />
+	<!-- import for resources bundle -->
+	<ui:with
+		type="me.steffenjacobs.effectivemusic.frontend.client.resource.ApplicationResources"
+		field="res" />
+	<ui:with
+		type="me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources.RES"
+		field="res2" />
+	<ui:style>
+	.inline {
+		margin-right: 10px;
+		display: inline-block;
+		font-size: 18px;
+		vertical-align: middle;
+	}
+	</ui:style>
+	<g:HTMLPanel>
+		<!-- main toolbox -->
+		<div>
+			<g:Button styleName="{res.style.sendButton} {res2.style.secondColor} {style.inline}"
+				text="Import" ui:field="importButtonUi" />
+			<g:TextBox styleName="{res2.style.secondColor} {res2.style.trackTitleTextBox} {style.inline}"
+				ui:field="searchBoxUi" />
+		</div>
+		<div>
+			<g:SimplePanel ui:field="contentPanelUi" />
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

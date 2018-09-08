@@ -1,15 +1,12 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Timer;
-import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
@@ -20,14 +17,14 @@ import me.steffenjacobs.effectivemusic.frontend.client.controller.MusicAutobeanF
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlayerInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlaylistInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshTrackInformationEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.browser.BrowserPanel;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.controlpanel.ControlPanel;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.PlaylistManager;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.PlaylistPanel;
-import me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefilebrowser.RemoteFileBrowserDialog;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlayerInformationDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
-import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackImpl;
 
 public class MainPanel extends Composite {
@@ -43,9 +40,9 @@ public class MainPanel extends Composite {
 
 	@UiField
 	PlaylistPanel playlistPanelUi;
-
+	
 	@UiField
-	Button remoteFileBrowserButtonUi;
+	BrowserPanel browserPanelUi;
 
 	private SimpleEventBus eventBus = null;
 
@@ -70,7 +67,7 @@ public class MainPanel extends Composite {
 						LiveTrackDTO dto = new TrackImpl(autoBeanTrack);
 						if (dto.equals(lastTrack)) {
 							controlPanel.setPosition(dto.getPosition(), dto.getLength());
-							return;
+//							return;
 						}
 						playlistManager.setCurrentTrack(dto);
 						lastTrack = dto;
@@ -116,17 +113,13 @@ public class MainPanel extends Composite {
 		t.scheduleRepeating(1000);
 	}
 
-	@UiHandler("remoteFileBrowserButtonUi")
-	public void onClick(ClickEvent e) {
-		new RemoteFileBrowserDialog(f -> GWT.log("chosen: " + f), eventBus);
-	}
-
 	@Inject
 	public MainPanel(SimpleEventBus evtBus) {
 		eventBus = evtBus;
 		// init display
 		initWidget(uiBinder.createAndBindUi(this));
 		controlPanel.setEventBus(evtBus);
+		browserPanelUi.setEventBus(evtBus);
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		playlistManager = new PlaylistManager(playlistPanelUi);
 		startAutoUpdate();
