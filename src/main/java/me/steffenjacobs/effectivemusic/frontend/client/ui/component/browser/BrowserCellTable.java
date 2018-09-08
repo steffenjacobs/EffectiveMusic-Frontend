@@ -3,18 +3,24 @@ package me.steffenjacobs.effectivemusic.frontend.client.ui.component.browser;
 import java.util.List;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ContextMenuEvent;
+import com.google.gwt.event.dom.client.ContextMenuHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.IsWidget;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.MultiSelectionModel;
 
 import me.steffenjacobs.effectivemusic.frontend.client.controller.Base64Encoder;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.AddToPlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDTO;
 
 /**
@@ -30,8 +36,6 @@ public class BrowserCellTable implements IsWidget {
 		cellTable.setKeyboardSelectionPolicy(KeyboardSelectionPolicy.ENABLED);
 
 		final MultiSelectionModel<TrackDTO> multiSelectionModel = new MultiSelectionModel<>();
-		multiSelectionModel.addSelectionChangeHandler(
-				e -> multiSelectionModel.getSelectedSet().forEach(t -> eventBus.fireEvent(new AddToPlaylistEvent(new String(Base64Encoder.encode(t.getPath().getBytes())), null))));
 		cellTable.setSelectionModel(multiSelectionModel);
 
 		cellTable.addColumn(titleColumn, "Title");
@@ -39,6 +43,27 @@ public class BrowserCellTable implements IsWidget {
 		cellTable.addColumn(lengthColumn, "Length");
 		cellTable.addColumn(albumColumn, "Album");
 		cellTable.addColumn(bitrateColumn, "Bitrate");
+
+		PopupPanel popupMenu = new PopupPanel(true);
+		final Label addToPlaylist = new Label("Add selection to Playlist");
+		addToPlaylist.addStyleName(EffectiveMusicResources.INSTANCE.style().contextMenuButton());
+		addToPlaylist.addClickHandler(e -> {
+			multiSelectionModel.getSelectedSet().forEach(t -> eventBus.fireEvent(new AddToPlaylistEvent(new String(Base64Encoder.encode(t.getPath().getBytes())), null)));
+			popupMenu.hide();
+			multiSelectionModel.clear();
+		});
+		popupMenu.add(addToPlaylist);
+
+		cellTable.sinkEvents(Event.ONCONTEXTMENU);
+		cellTable.addHandler(new ContextMenuHandler() {
+			@Override
+			public void onContextMenu(ContextMenuEvent event) {
+				event.preventDefault();
+				event.stopPropagation();
+				popupMenu.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+				popupMenu.show();
+			}
+		}, ContextMenuEvent.getType());
 
 		SimplePager pager = new SimplePager();
 		pager.setDisplay(cellTable);

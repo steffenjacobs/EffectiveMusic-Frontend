@@ -48,5 +48,7 @@ public class EffectiveMusicResources {
 		String dialogPanel();
 		
 		String contentPanel();
+
+		String contextMenuButton();
 	}
 }
