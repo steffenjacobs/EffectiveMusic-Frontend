@@ -20,10 +20,10 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.NextEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.PauseMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.PreviousEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.ResumeMusicEvent;
-import me.steffenjacobs.effectivemusic.frontend.client.event.StartMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.StopMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.TrackPositionChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.VolumeChangeEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.AddToPlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
@@ -51,6 +51,9 @@ public class ControlPanel extends Composite {
 
 	@UiField
 	Button previousButton;
+
+	@UiField
+	Button startYoutubeButton;
 
 	@UiField
 	TextBox textBox;
@@ -170,15 +173,12 @@ public class ControlPanel extends Composite {
 					paused = false;
 				}
 			}));
-		} else {
-			eventBus.fireEvent(new StartMusicEvent(new String(Base64Encoder.encode(textBox.getText().getBytes())), new DefaultRequestCallback() {
-				@Override
-				public void onResponseReceived(Request request, Response response) {
-					setPlaying(true);
-				}
-			}));
 		}
+	}
 
+	@UiHandler("startYoutubeButton")
+	void onStartYoutubeButtonClicked(ClickEvent e) {
+		eventBus.fireEvent(new AddToPlaylistEvent(new String(Base64Encoder.encode(textBox.getText().getBytes())), null));
 	}
 
 	@UiHandler("nextButton")
