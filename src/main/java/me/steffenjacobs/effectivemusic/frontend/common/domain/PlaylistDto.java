@@ -8,5 +8,9 @@ public interface PlaylistDto {
 	void setTracks(List<TrackWrapperDto> tracks);
 
 	List<TrackWrapperDto> getTracks();
+	
+	void setRepeatLoopStatus(int status);
+	
+	int getRepeatLoopStatus();
 
 }

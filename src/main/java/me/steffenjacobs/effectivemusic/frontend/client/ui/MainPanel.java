@@ -95,6 +95,7 @@ public class MainPanel extends Composite {
 					AutoBean<PlaylistDto> bean = AutoBeanCodex.decode(factory, PlaylistDto.class, response.getText());
 					PlaylistDto dto = bean.as();
 					playlistManager.updatePlaylist(new PlaylistImpl(dto));
+					controlPanel.setRepeatStatus(dto.getRepeatLoopStatus());
 				}
 			}));
 

@@ -1,5 +1,8 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui.component.controlpanel;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -24,9 +27,11 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.StopMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.TrackPositionChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.VolumeChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.AddToPlaylistEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.PlaylistLoopRepeatEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.resource.EffectiveMusicMessages;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.multistatebutton.MultiStateButton;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SimpleSlider;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.simpleslider.SliderEventHandler;
@@ -57,6 +62,9 @@ public class ControlPanel extends Composite {
 	Button startYoutubeButton;
 
 	@UiField
+	MultiStateButton repeatLoopButtonUi;
+
+	@UiField
 	TextBox textBox;
 
 	@UiField
@@ -82,6 +90,14 @@ public class ControlPanel extends Composite {
 	public ControlPanel() {
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
+
+		final Map<Integer, String> captions = new HashMap<>();
+		captions.put(0, "→");
+		captions.put(1, "∞");
+		captions.put(2, "↻");
+		captions.put(3, "🔀");
+		repeatLoopButtonUi.setButtonCaptions(captions);
+		repeatLoopButtonUi.addStateChangeHandler(s -> eventBus.fireEvent(new PlaylistLoopRepeatEvent(s)));
 	}
 
 	public void setEventBus(SimpleEventBus evtBus) {
@@ -104,6 +120,10 @@ public class ControlPanel extends Composite {
 	public void setPlaying(boolean value) {
 		startPauseButton.setText(value ? msg.pauseButton() : msg.startButton());
 		playing = value;
+	}
+	
+	public void setRepeatStatus(int status){
+		repeatLoopButtonUi.setStatus(status);
 	}
 
 	private void setupVolumeListener() {

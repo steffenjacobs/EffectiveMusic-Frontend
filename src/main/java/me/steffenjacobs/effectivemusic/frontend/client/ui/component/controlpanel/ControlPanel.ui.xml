@@ -32,6 +32,8 @@
 				text="{i18n.previousButton}" ui:field="previousButton" />
 			<g:Button styleName="{res.style.sendButton} {res.style.secondColor}"
 				text="{i18n.nextButton}" ui:field="nextButton" />
+			<c:multistatebutton.MultiStateButton
+				styleName="{res.style.sendButton} {res.style.secondColor}" ui:field="repeatLoopButtonUi" />
 			<div class="{style.inline}">
 				<div class="{style.inline}">
 					<g:Label ui:field="playTitle" />
