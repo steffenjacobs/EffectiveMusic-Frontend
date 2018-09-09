@@ -11,6 +11,7 @@ import com.google.gwt.http.client.Response;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Label;
@@ -21,11 +22,15 @@ import com.google.web.bindery.autobean.shared.AutoBean;
 import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 
 import me.steffenjacobs.effectivemusic.frontend.client.controller.MusicAutobeanFactory;
+import me.steffenjacobs.effectivemusic.frontend.client.event.libraryimport.GetLibraryImportStatusEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.search.SearchEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.Wrapper;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefilebrowser.RemoteFileBrowserDialog;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.WeightedTrackListDTO;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.index.IndexStatusDTO;
 
 /** @author Steffen Jacobs */
 public class BrowserPanel extends Composite {
@@ -49,6 +54,9 @@ public class BrowserPanel extends Composite {
 	@UiField
 	Label searchResultCountUi;
 
+	@UiField
+	Label importStatusUi;
+
 	SimpleEventBus eventBus;
 
 	final BrowserCellTable browserCellTable;
@@ -64,7 +72,52 @@ public class BrowserPanel extends Composite {
 	public void setEventBus(SimpleEventBus evtBus) {
 		this.eventBus = evtBus;
 		browserCellTable.setEventBus(evtBus);
+		checkImportStatus();
 		refreshUi("");
+
+	}
+
+	private void updateImportStatus(long indexedFiles, long filesToIndex) {
+		if (filesToIndex == indexedFiles) {
+			importStatusUi.setText("Import of " + indexedFiles + " tracks finished!");
+		} else {
+			importStatusUi.setText("Import Status: " + indexedFiles + "/" + filesToIndex + "(" + FormattingUtils.formatPercent(100 * indexedFiles / (double) filesToIndex) + "%)");
+		}
+	}
+
+	private void checkImportStatus() {
+		eventBus.fireEvent(new GetLibraryImportStatusEvent(new DefaultRequestCallback() {
+			@Override
+			public void onResponseReceived(Request request, Response response) {
+				AutoBean<IndexStatusDTO> bean = AutoBeanCodex.decode(factory, IndexStatusDTO.class, response.getText());
+				final IndexStatusDTO indexStatus = bean.as();
+				//
+				if (!"FINISHED".equals(indexStatus.getIndexingStatus())) {
+					updateImportStatus(indexStatus.getFilesIndexed(), indexStatus.getFilesToIndex());
+					final Wrapper<Timer> timerWrapper = new Wrapper<>();
+					timerWrapper.setValue(new Timer() {
+
+						@Override
+						public void run() {
+							eventBus.fireEvent(new GetLibraryImportStatusEvent(new DefaultRequestCallback() {
+								@Override
+								public void onResponseReceived(Request request, Response response) {
+									AutoBean<IndexStatusDTO> bean = AutoBeanCodex.decode(factory, IndexStatusDTO.class, response.getText());
+									final IndexStatusDTO indexStatus = bean.as();
+									//
+									if ("FINISHED".equals(indexStatus.getIndexingStatus())) {
+										timerWrapper.getValue().cancel();
+									}
+									updateImportStatus(indexStatus.getFilesIndexed(), indexStatus.getFilesToIndex());
+								}
+							}));
+						}
+					});
+
+					timerWrapper.getValue().scheduleRepeating(300);
+				}
+			}
+		}));
 	}
 
 	public void setResultCount(int count) {

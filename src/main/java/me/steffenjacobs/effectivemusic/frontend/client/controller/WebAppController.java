@@ -21,6 +21,8 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.StopMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.TrackPositionChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.VolumeChangeEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.io.BrowseFileEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.libraryimport.GetLibraryImportStatusEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.libraryimport.StartLibraryImportEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.AddToPlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.GotoPlaylistPositionEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.PlaylistLoopRepeatEvent;
@@ -68,6 +70,8 @@ public class WebAppController {
 		eventBus.addHandler(GotoPlaylistPositionEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/position?position=" + event.getPosition(), true));
 		eventBus.addHandler(PlaylistLoopRepeatEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/loop?value=" + event.getLoopRepeatStatus(), true));
 		eventBus.addHandler(MuteEvent.TYPE, event -> sendRequest("http://localhost:8080/music/mute?mute=" + event.isMute(), true));
+		eventBus.addHandler(GetLibraryImportStatusEvent.TYPE, event -> sendRequest("http://localhost:8081/files/index/status", false, event.getCallback()));
+		eventBus.addHandler(StartLibraryImportEvent.TYPE, event -> sendRequest("http://localhost:8081/files/index?path=" + event.getPath(), true));
 	}
 
 	private void sendRequest(String uri, boolean post) {

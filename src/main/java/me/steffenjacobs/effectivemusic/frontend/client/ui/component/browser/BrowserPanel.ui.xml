@@ -50,6 +50,7 @@
 					styleName="{res2.style.secondColor} {res2.style.trackTitleTextBox}"
 					ui:field="searchBoxUi" />
 				<g:Label styleName="{style.inline}" ui:field="searchResultCountUi" />
+				<g:Label styleName="{style.inline}" ui:field="importStatusUi" />
 			</div>
 			<div class="{res2.style.spacerLine}" />
 
