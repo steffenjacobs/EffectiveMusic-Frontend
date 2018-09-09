@@ -23,6 +23,7 @@ import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 
 import me.steffenjacobs.effectivemusic.frontend.client.controller.MusicAutobeanFactory;
 import me.steffenjacobs.effectivemusic.frontend.client.event.libraryimport.GetLibraryImportStatusEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.libraryimport.StartLibraryImportEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.search.SearchEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
@@ -81,7 +82,7 @@ public class BrowserPanel extends Composite {
 		if (filesToIndex == indexedFiles) {
 			importStatusUi.setText("Import of " + indexedFiles + " tracks finished!");
 		} else {
-			importStatusUi.setText("Import Status: " + indexedFiles + "/" + filesToIndex + "(" + FormattingUtils.formatPercent(100 * indexedFiles / (double) filesToIndex) + "%)");
+			importStatusUi.setText("Import Status: " + indexedFiles + "/" + filesToIndex + " (" + FormattingUtils.formatPercent(100 * indexedFiles / (double) filesToIndex) + "%)");
 		}
 	}
 
@@ -91,7 +92,6 @@ public class BrowserPanel extends Composite {
 			public void onResponseReceived(Request request, Response response) {
 				AutoBean<IndexStatusDTO> bean = AutoBeanCodex.decode(factory, IndexStatusDTO.class, response.getText());
 				final IndexStatusDTO indexStatus = bean.as();
-				//
 				if (!"FINISHED".equals(indexStatus.getIndexingStatus())) {
 					updateImportStatus(indexStatus.getFilesIndexed(), indexStatus.getFilesToIndex());
 					final Wrapper<Timer> timerWrapper = new Wrapper<>();
@@ -104,7 +104,6 @@ public class BrowserPanel extends Composite {
 								public void onResponseReceived(Request request, Response response) {
 									AutoBean<IndexStatusDTO> bean = AutoBeanCodex.decode(factory, IndexStatusDTO.class, response.getText());
 									final IndexStatusDTO indexStatus = bean.as();
-									//
 									if ("FINISHED".equals(indexStatus.getIndexingStatus())) {
 										timerWrapper.getValue().cancel();
 									}
@@ -143,6 +142,15 @@ public class BrowserPanel extends Composite {
 
 	@UiHandler("importButtonUi")
 	void onStopButtonClicked(ClickEvent e) {
-		new RemoteFileBrowserDialog(f -> GWT.log("chosen: " + f), eventBus);
+		new RemoteFileBrowserDialog(f -> {
+			if (f != null) {
+				eventBus.fireEvent(new StartLibraryImportEvent(f, new DefaultRequestCallback() {
+					@Override
+					public void onResponseReceived(Request request, Response response) {
+						checkImportStatus();
+					}
+				}));
+			}
+		}, eventBus);
 	}
 }

@@ -2,6 +2,8 @@ package me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefileb
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.http.client.Request;
 import com.google.gwt.http.client.Response;
@@ -61,6 +63,7 @@ public class RemoteFileBrowser extends Composite {
 				AutoBean<BrowseResult> bean = AutoBeanCodex.decode(factory, BrowseResult.class, response.getText());
 				final BrowseResult autoBeanBrowseResult = bean.as();
 				browsePathUi.setText(autoBeanBrowseResult.getDirectoryPath());
+				browsePathUi.setFocus(true);
 				updateList(autoBeanBrowseResult);
 			}
 		}, newPath));
@@ -69,6 +72,13 @@ public class RemoteFileBrowser extends Composite {
 	@UiHandler("browseButtonUi")
 	void onClick(ClickEvent e) {
 		updatePath(browsePathUi.getText());
+	}
+
+	@UiHandler("browsePathUi")
+	void onKeyUp(KeyUpEvent e) {
+		if (e.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			updatePath(browsePathUi.getText());
+		}
 	}
 
 	public String getPath() {

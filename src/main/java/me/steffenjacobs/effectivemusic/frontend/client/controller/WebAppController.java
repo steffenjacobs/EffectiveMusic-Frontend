@@ -71,7 +71,7 @@ public class WebAppController {
 		eventBus.addHandler(PlaylistLoopRepeatEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/loop?value=" + event.getLoopRepeatStatus(), true));
 		eventBus.addHandler(MuteEvent.TYPE, event -> sendRequest("http://localhost:8080/music/mute?mute=" + event.isMute(), true));
 		eventBus.addHandler(GetLibraryImportStatusEvent.TYPE, event -> sendRequest("http://localhost:8081/files/index/status", false, event.getCallback()));
-		eventBus.addHandler(StartLibraryImportEvent.TYPE, event -> sendRequest("http://localhost:8081/files/index?path=" + event.getPath(), true));
+		eventBus.addHandler(StartLibraryImportEvent.TYPE, event -> sendRequest("http://localhost:8081/files/index?path=" + event.getPath(), true, event.getCallback()));
 	}
 
 	private void sendRequest(String uri, boolean post) {
