@@ -1,7 +1,7 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -42,8 +42,8 @@ public class PlaylistPanel extends Composite {
 	@UiField
 	DivElement playlistHeaderUi;
 
-	private TrackWithPathImpl currentlyPlaying;
-	private Map<TrackWithPathImpl, FlowPanel> playlistElements;
+	private FlowPanel currentlyPlayingPanel;
+	private Map<Integer, FlowPanel> playlistElements;
 	private PlaylistManager playlistManager;
 
 	public PlaylistPanel() {
@@ -52,29 +52,27 @@ public class PlaylistPanel extends Composite {
 		playlistHeaderUi.setInnerHTML("Playlist");
 	}
 
-	public void setCurrentlyPlaying(TrackWithPathImpl liveTrackDTO) {
-		FlowPanel elem = playlistElements.get(currentlyPlaying);
-		if (currentlyPlaying != null) {
-			elem.removeStyleName(EffectiveMusicResources.INSTANCE.style().playingTrack());
+	public void setCurrentlyPlaying(int index) {
+		if (currentlyPlayingPanel != null) {
+			currentlyPlayingPanel.removeStyleName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 		}
-		elem = playlistElements.get(liveTrackDTO);
-		currentlyPlaying = liveTrackDTO;
+		FlowPanel elem = playlistElements.get(index);
+		currentlyPlayingPanel = elem;
 		elem.addStyleName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 	}
 
-	public void setPlaylist(Collection<TrackWithPathImpl> tracks) {
+	public void setPlaylist(List<TrackWithPathImpl> tracks) {
 		playlistElements = new HashMap<>();
+
+		int count = 0;
 		for (TrackWithPathImpl track : tracks) {
 			final FlowPanel elem = createTrackItem(track);
 			panelUi.add(elem);
-			playlistElements.put(track, elem);
-			if (track.equals(currentlyPlaying)) {
-				elem.addStyleName(EffectiveMusicResources.INSTANCE.style().playingTrack());
-			}
+			playlistElements.put(count, elem);
+			count++;
 		}
 		playlistHeaderUi.setInnerHTML("Playlist (" + FormattingUtils.formatTime(tracks.stream().collect(Collectors.summingLong(t -> t.getTrack().getLength()))) + ")");
 	}
-	
 
 	private FlowPanel createTrackItem(TrackWithPathImpl track) {
 		FlowPanel item = new FlowPanel();

@@ -6,7 +6,6 @@ import java.util.List;
 import com.google.gwt.event.shared.SimpleEventBus;
 
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.GotoPlaylistPositionEvent;
-import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistImpl;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackWithPathImpl;
 
@@ -17,7 +16,7 @@ public class PlaylistManager {
 
 	private final PlaylistPanel panel;
 	private final SimpleEventBus eventBus;
-	private LiveTrackDTO currentlyPlayed = null;
+	private int currentlyPlayed = -1;
 
 	public PlaylistManager(PlaylistPanel panel, SimpleEventBus evtBus) {
 		this.panel = panel;
@@ -28,9 +27,6 @@ public class PlaylistManager {
 	private void refreshUi() {
 		panel.clear();
 		panel.setPlaylist(playlist);
-		if (currentlyPlayed != null) {
-			forceUpdateCurrentTrack(currentlyPlayed);
-		}
 	}
 
 	public void updatePlaylist(PlaylistImpl newPlaylist) {
@@ -46,20 +42,10 @@ public class PlaylistManager {
 		refreshUi();
 	}
 
-	public void setCurrentTrack(LiveTrackDTO dto) {
-		if (currentlyPlayed != null && currentlyPlayed.equals(dto)) {
-			return;
-		}
-		forceUpdateCurrentTrack(dto);
-	}
-
-	private void forceUpdateCurrentTrack(LiveTrackDTO dto) {
-		currentlyPlayed = dto;
-		for (TrackWithPathImpl track : playlist) {
-			if (track.getTrack().equals(dto)) {
-				panel.setCurrentlyPlaying(track);
-				return;
-			}
+	public void setCurrentTrack(int index) {
+		if (currentlyPlayed != index) {
+			currentlyPlayed = index;
+			panel.setCurrentlyPlaying(index);
 		}
 	}
 

@@ -41,7 +41,7 @@ public class MainPanel extends Composite {
 
 	@UiField
 	PlaylistPanel playlistPanelUi;
-	
+
 	@UiField
 	BrowserPanel browserPanelUi;
 
@@ -55,8 +55,8 @@ public class MainPanel extends Composite {
 
 		@Override
 		public void run() {
+			/** ------ Live Track Info ----- */
 			eventBus.fireEvent(new RefreshTrackInformationEvent(new DefaultRequestCallback() {
-
 				@Override
 				public void onResponseReceived(Request request, Response response) {
 					if ("".equals(response.getText())) {
@@ -68,9 +68,8 @@ public class MainPanel extends Composite {
 						LiveTrackDTO dto = new LiveTrackImpl(autoBeanTrack);
 						if (dto.equals(lastTrack)) {
 							controlPanel.setPosition(dto.getPosition(), dto.getLength());
-//							return;
+							// return;
 						}
-						playlistManager.setCurrentTrack(dto);
 						lastTrack = dto;
 						if (autoBeanTrack == null) {
 							controlPanel.clearTextFields();
@@ -88,17 +87,19 @@ public class MainPanel extends Composite {
 				}
 			}));
 
+			/** ----- Playlist Information ----- */
 			eventBus.fireEvent(new RefreshPlaylistInformationEvent(new DefaultRequestCallback() {
-
 				@Override
 				public void onResponseReceived(Request request, Response response) {
 					AutoBean<PlaylistDto> bean = AutoBeanCodex.decode(factory, PlaylistDto.class, response.getText());
 					PlaylistDto dto = bean.as();
 					playlistManager.updatePlaylist(new PlaylistImpl(dto));
 					controlPanel.setRepeatStatus(dto.getRepeatLoopStatus());
+					playlistManager.setCurrentTrack(dto.getCurrentIndex());
 				}
 			}));
 
+			/** -----Player Information ----- */
 			eventBus.fireEvent(new RefreshPlayerInformationEvent(new DefaultRequestCallback() {
 				@Override
 				public void onResponseReceived(Request request, Response response) {
