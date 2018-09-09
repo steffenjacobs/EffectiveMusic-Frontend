@@ -26,10 +26,12 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.libraryimport.GetLi
 import me.steffenjacobs.effectivemusic.frontend.client.event.libraryimport.StartLibraryImportEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.search.SearchEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.OrderedRequestCallback;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.Wrapper;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefilebrowser.RemoteFileBrowserDialog;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.WeightedTrackDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.WeightedTrackListDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.index.IndexStatusDTO;
 
@@ -61,6 +63,9 @@ public class BrowserPanel extends Composite {
 	SimpleEventBus eventBus;
 
 	final BrowserCellTable browserCellTable;
+
+	private int sequenceNumberSearch = 0;
+	private int sequenceNumberSearchReceived = 0;
 
 	public BrowserPanel() {
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
@@ -129,13 +134,16 @@ public class BrowserPanel extends Composite {
 	}
 
 	private void refreshUi(String searchText) {
-		eventBus.fireEvent(new SearchEvent(searchText, new DefaultRequestCallback() {
+		eventBus.fireEvent(new SearchEvent(searchText, new OrderedRequestCallback(this.sequenceNumberSearch++) {
 			@Override
 			public void onResponseReceived(Request request, Response response) {
-				AutoBean<WeightedTrackListDTO> bean = AutoBeanCodex.decode(factory, WeightedTrackListDTO.class, response.getText());
-				final WeightedTrackListDTO autoBeanTracklist = bean.as();
-				browserCellTable.updateTracks(autoBeanTracklist.getTracks().stream().map(t -> t.getTrack()).collect(Collectors.toList()));
-				setResultCount(autoBeanTracklist.getTracks().size());
+				if (sequenceNumberSearchReceived <= getSequenceNumber()) {
+					AutoBean<WeightedTrackListDTO> bean = AutoBeanCodex.decode(factory, WeightedTrackListDTO.class, response.getText());
+					final WeightedTrackListDTO autoBeanTracklist = bean.as();
+					browserCellTable.updateTracks(autoBeanTracklist.getTracks().stream().map(WeightedTrackDTO::getTrack).collect(Collectors.toList()));
+					setResultCount(autoBeanTracklist.getTracks().size());
+					sequenceNumberSearchReceived = getSequenceNumber();
+				}
 			}
 		}));
 	}
