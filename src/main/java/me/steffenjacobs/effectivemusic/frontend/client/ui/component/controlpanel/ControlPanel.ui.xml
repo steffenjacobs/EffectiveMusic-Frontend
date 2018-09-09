@@ -15,6 +15,13 @@
 		font-size: 18px;
 		vertical-align: middle;
 	}
+	.invisibleButton{
+		border: none;
+		background-color: transparent;
+		margin-left: -10px;
+		width: 40px;
+		height: 40px;
+	}
 	</ui:style>
 	<g:HTMLPanel>
 		<!-- main toolbox -->
@@ -61,6 +68,9 @@
 						<div class="{style.inline}">
 							<g:Label ui:field="playVolume" />
 						</div>
+						<c:multistatebutton.MultiStateButton
+							styleName="{style.invisibleButton} {res.style.smallButton} {res.style.fontSize17}"
+							ui:field="muteButtonUi" />
 					</div>
 				</div>
 			</div>

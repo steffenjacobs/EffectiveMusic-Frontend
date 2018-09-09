@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 import me.steffenjacobs.effectivemusic.frontend.client.controller.Base64Encoder;
+import me.steffenjacobs.effectivemusic.frontend.client.event.MuteEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.NextEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.PauseMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.PreviousEvent;
@@ -84,6 +85,9 @@ public class ControlPanel extends Composite {
 
 	SimpleEventBus eventBus;
 
+	@UiField
+	MultiStateButton muteButtonUi;
+
 	private boolean playing = false;
 	private boolean paused = false;
 
@@ -91,6 +95,19 @@ public class ControlPanel extends Composite {
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 
+		createRepeatLoopButton();
+		createMuteButton();
+	}
+
+	private void createMuteButton() {
+		final Map<Integer, String> captions = new HashMap<>();
+		captions.put(0, "🔊");
+		captions.put(1, "🔇");
+		muteButtonUi.setButtonCaptions(captions);
+		muteButtonUi.addStateChangeHandler(s -> eventBus.fireEvent(new MuteEvent(s == 1)));
+	}
+
+	private void createRepeatLoopButton() {
 		final Map<Integer, String> captions = new HashMap<>();
 		captions.put(0, "→");
 		captions.put(1, "∞");
@@ -121,9 +138,13 @@ public class ControlPanel extends Composite {
 		startPauseButton.setText(value ? msg.pauseButton() : msg.startButton());
 		playing = value;
 	}
-	
-	public void setRepeatStatus(int status){
+
+	public void setRepeatStatus(int status) {
 		repeatLoopButtonUi.setStatus(status);
+	}
+
+	public void setMuteStatus(boolean mute) {
+		muteButtonUi.setStatus(mute ? 1 : 0);
 	}
 
 	private void setupVolumeListener() {

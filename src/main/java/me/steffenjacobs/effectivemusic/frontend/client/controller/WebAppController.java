@@ -11,6 +11,7 @@ import com.google.gwt.http.client.URL;
 import com.google.gwt.user.client.Window;
 import com.google.inject.Inject;
 
+import me.steffenjacobs.effectivemusic.frontend.client.event.MuteEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.NextEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.PauseMusicEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.PreviousEvent;
@@ -66,6 +67,7 @@ public class WebAppController {
 		eventBus.addHandler(AddToPlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/enquene?path=" + event.getPath(), true, event.getCallback()));
 		eventBus.addHandler(GotoPlaylistPositionEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/position?position=" + event.getPosition(), true));
 		eventBus.addHandler(PlaylistLoopRepeatEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/loop?value=" + event.getLoopRepeatStatus(), true));
+		eventBus.addHandler(MuteEvent.TYPE, event -> sendRequest("http://localhost:8080/music/mute?mute=" + event.isMute(), true));
 	}
 
 	private void sendRequest(String uri, boolean post) {

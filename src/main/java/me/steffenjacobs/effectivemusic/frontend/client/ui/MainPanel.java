@@ -106,6 +106,7 @@ public class MainPanel extends Composite {
 					PlayerInformationDTO dto = bean.as();
 					controlPanel.setPlaying("PLAYING".equals(dto.getStatus()));
 					controlPanel.setVolume(dto.getVolume());
+					controlPanel.setMuteStatus(dto.getMute());
 				}
 			}));
 		}
