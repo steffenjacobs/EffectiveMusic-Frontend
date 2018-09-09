@@ -8,6 +8,8 @@ import me.steffenjacobs.effectivemusic.frontend.common.domain.PlayerInformationD
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackListDTO;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.WeightedTrackDTO;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.WeightedTrackListDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.io.BrowseResult;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.io.FileDTO;
 
@@ -22,9 +24,13 @@ public interface MusicAutobeanFactory extends AutoBeanFactory {
 	AutoBean<BrowseResult> browseResult();
 
 	AutoBean<FileDTO> fileDTO();
-	
+
 	AutoBean<TrackDTO> trackDTO();
-	
+
 	AutoBean<TrackListDTO> trackListDTO();
+
+	AutoBean<WeightedTrackListDTO> weightedTrackListDTO();
+
+	AutoBean<WeightedTrackDTO> weightedTrackDTO();
 
 }

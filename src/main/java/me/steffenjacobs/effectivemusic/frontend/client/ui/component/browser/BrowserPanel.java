@@ -1,5 +1,7 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui.component.browser;
 
+import java.util.stream.Collectors;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -23,7 +25,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.search.SearchEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.EffectiveMusicResources;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefilebrowser.RemoteFileBrowserDialog;
-import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackListDTO;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.WeightedTrackListDTO;
 
 /** @author Steffen Jacobs */
 public class BrowserPanel extends Composite {
@@ -78,9 +80,9 @@ public class BrowserPanel extends Composite {
 		eventBus.fireEvent(new SearchEvent(searchText, new DefaultRequestCallback() {
 			@Override
 			public void onResponseReceived(Request request, Response response) {
-				AutoBean<TrackListDTO> bean = AutoBeanCodex.decode(factory, TrackListDTO.class, response.getText());
-				final TrackListDTO autoBeanTracklist = bean.as();
-				browserCellTable.updateTracks(autoBeanTracklist.getTracks());
+				AutoBean<WeightedTrackListDTO> bean = AutoBeanCodex.decode(factory, WeightedTrackListDTO.class, response.getText());
+				final WeightedTrackListDTO autoBeanTracklist = bean.as();
+				browserCellTable.updateTracks(autoBeanTracklist.getTracks().stream().map(t -> t.getTrack()).collect(Collectors.toList()));
 				setResultCount(autoBeanTracklist.getTracks().size());
 			}
 		}));

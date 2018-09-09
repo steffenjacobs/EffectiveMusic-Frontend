@@ -63,7 +63,7 @@ public class WebAppController {
 		eventBus.addHandler(RefreshPlaylistInformationEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist", false, event.getCallback()));
 		eventBus.addHandler(RefreshPlayerInformationEvent.TYPE, event -> sendRequest("http://localhost:8080/music/player", false, event.getCallback()));
 		eventBus.addHandler(BrowseFileEvent.TYPE, event -> sendRequest("http://localhost:8081/files/browse?searchText=" + event.getPath(), true, event.getCallback()));
-		eventBus.addHandler(SearchEvent.TYPE, event -> sendRequest("http://localhost:8081/files/search?search=" + event.getSearchText(), false, event.getCallback()));
+		eventBus.addHandler(SearchEvent.TYPE, event -> sendRequest("http://localhost:8081/files/search/weighted?search=" + event.getSearchText(), false, event.getCallback()));
 		eventBus.addHandler(AddToPlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/enquene?path=" + event.getPath(), true, event.getCallback()));
 		eventBus.addHandler(GotoPlaylistPositionEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/position?position=" + event.getPosition(), true));
 		eventBus.addHandler(PlaylistLoopRepeatEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/loop?value=" + event.getLoopRepeatStatus(), true));
