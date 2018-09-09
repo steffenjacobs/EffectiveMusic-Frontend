@@ -65,4 +65,8 @@ public interface TrackDTO {
 
 	void setLength(long length);
 
+	long getListencount();
+
+	void setListencount(long listencount);
+
 }

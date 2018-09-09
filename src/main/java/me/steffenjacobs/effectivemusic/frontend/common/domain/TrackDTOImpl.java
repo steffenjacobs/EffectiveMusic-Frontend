@@ -22,6 +22,7 @@ public class TrackDTOImpl implements TrackDTO{
 	private long bitrate;
 	private Date creationDate;
 	private long length;
+	private long listencount;
 
 	public TrackDTOImpl(){
 		
@@ -183,5 +184,15 @@ public class TrackDTOImpl implements TrackDTO{
 		} else if (!title.equals(other.title))
 			return false;
 		return true;
+	}
+
+	@Override
+	public long getListencount() {
+		return listencount;
+	}
+
+	@Override
+	public void setListencount(long listencount) {
+		this.listencount = listencount;
 	}
 }
