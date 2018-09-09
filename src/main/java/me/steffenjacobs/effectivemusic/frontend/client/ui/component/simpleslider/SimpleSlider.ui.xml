@@ -11,14 +11,15 @@
 	}
 	
 	.left {
-		background-color: #88b4fc;
+		background-color: #c2c8d6;
 		height: 15px;
-		border-right: 1px solid #262c35;
+		border-right: 3px solid #d38850;
 		max-width: 150px;
 		transition: width 150ms;
 	}
 	
 	.box {
+		background-color: #9ea8be;
 		border: 1px solid #4f5c70;
 		height: 15px;
 		width: 150px;
