@@ -30,7 +30,7 @@ public class AddToPlaylistEvent extends GwtEvent<AddToPlaylistEventHandler> {
 
 	@Override
 	protected void dispatch(AddToPlaylistEventHandler handler) {
-		handler.onStart(this);
+		handler.onAddToPlaylist(this);
 	}
 
 	@Override

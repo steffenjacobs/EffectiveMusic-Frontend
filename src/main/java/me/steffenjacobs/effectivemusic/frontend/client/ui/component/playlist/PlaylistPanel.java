@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Event;
@@ -17,6 +17,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
@@ -66,7 +67,7 @@ public class PlaylistPanel extends Composite {
 
 		int count = 0;
 		for (TrackWithPathImpl track : tracks) {
-			final FlowPanel elem = createTrackItem(track);
+			final FlowPanel elem = createTrackItem(track, count);
 			panelUi.add(elem);
 			playlistElements.put(count, elem);
 			count++;
@@ -74,18 +75,31 @@ public class PlaylistPanel extends Composite {
 		playlistHeaderUi.setInnerHTML("Playlist (" + FormattingUtils.formatTime(tracks.stream().collect(Collectors.summingLong(t -> t.getTrack().getLength()))) + ")");
 	}
 
-	private FlowPanel createTrackItem(TrackWithPathImpl track) {
+	private FlowPanel createTrackItem(TrackWithPathImpl track, int index) {
 		FlowPanel item = new FlowPanel();
 		item.sinkEvents(Event.ONCLICK);
-		item.addHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(ClickEvent event) {
-				playlistManager.elementClicked(track);
-			}
-		}, ClickEvent.getType());
+		item.addHandler(event -> playlistManager.elementClicked(track), ClickEvent.getType());
 		item.addStyleName(EffectiveMusicResources.INSTANCE.style().track());
-		item.add(new Label(FormattingUtils.formatTrackForPlaylist(track.getTrack())));
+		final Label labelTrack = new Label(FormattingUtils.formatTrackForPlaylist(track.getTrack()));
+		item.add(labelTrack);
+
+		final PopupPanel popupMenu = new PopupPanel(true);
+		final Label removeFromPlaylistButton = new Label("Remove from playlist");
+		removeFromPlaylistButton.addStyleName(EffectiveMusicResources.INSTANCE.style().contextMenuButton());
+		removeFromPlaylistButton.addClickHandler(event -> {
+			playlistManager.removeFromPlaylist(index);
+			popupMenu.hide();
+		});
+		popupMenu.add(removeFromPlaylistButton);
+
+		item.sinkEvents(Event.ONCONTEXTMENU);
+		item.addHandler(event -> {
+			event.preventDefault();
+			event.stopPropagation();
+
+			popupMenu.setPopupPosition(event.getNativeEvent().getClientX(), event.getNativeEvent().getClientY());
+			popupMenu.show();
+		}, ContextMenuEvent.getType());
 		return item;
 	}
 

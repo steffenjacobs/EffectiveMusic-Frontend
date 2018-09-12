@@ -3,8 +3,8 @@ package me.steffenjacobs.effectivemusic.frontend.client.event.playlist;
 import com.google.gwt.event.shared.EventHandler;
 
 /** @author Steffen Jacobs */
-public interface AddToPlaylistEventHandler extends EventHandler {
+public interface RemoveFromPlaylistEventHandler extends EventHandler {
 
-	void onAddToPlaylist(AddToPlaylistEvent event);
+	void onRemoveFromPlaylist(RemoveFromPlaylistEvent event);
 
 }

@@ -26,6 +26,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.libraryimport.Start
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.AddToPlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.GotoPlaylistPositionEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.PlaylistLoopRepeatEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.RemoveFromPlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlayerInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlaylistInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshTrackInformationEvent;
@@ -76,6 +77,10 @@ public class WebAppController {
 			final String uri = "http://localhost:8080/music/playlist/enquene?path=";
 			sendRequest(uri + String.join("&path=", event.getPaths()), true, event.getCallback());
 		});
+		eventBus.addHandler(RemoveFromPlaylistEvent.TYPE, event -> {
+			final String uri = "http://localhost:8080/music/playlist/dequene?index=";
+			sendRequest(uri + event.getIndicesAsQueryString(), true);
+		});
 	}
 
 	private void sendRequest(String uri, boolean post) {
@@ -83,6 +88,7 @@ public class WebAppController {
 	}
 
 	private void sendRequest(String uri, boolean post, RequestCallback callback) {
+		GWT.log(uri);
 		String pageBaseUrl = GWT.getHostPageBaseURL();
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, pageBaseUrl + "/rest/" + (post ? "post" : "get") + "?uri=" + URL.encode(uri).replace("&", "%26"));
 		builder.setHeader("Content-type", "application/x-www-form-urlencoded");

@@ -1,11 +1,13 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.google.gwt.event.shared.SimpleEventBus;
 
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.GotoPlaylistPositionEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.RemoveFromPlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistImpl;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackWithPathImpl;
 
@@ -52,5 +54,9 @@ public class PlaylistManager {
 	public void elementClicked(TrackWithPathImpl track) {
 		int position = playlist.indexOf(track);
 		eventBus.fireEvent(new GotoPlaylistPositionEvent(position));
+	}
+
+	public void removeFromPlaylist(long index) {
+		eventBus.fireEvent(new RemoveFromPlaylistEvent(Arrays.asList(index)));
 	}
 }
