@@ -17,6 +17,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.RenamePlay
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.StorePlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.settings.GetSettingsEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.misc.NotifcationService;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefilebrowser.RemoteFileBrowserDialog;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistImpl;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.SettingsDTO;
@@ -90,7 +91,12 @@ public class PlaylistManager {
 	}
 
 	public void storePlaylist() {
-		eventBus.fireEvent(new StorePlaylistEvent("", new DefaultRequestCallback()));
+		eventBus.fireEvent(new StorePlaylistEvent("", new DefaultRequestCallback() {
+			@Override
+			public void onResponseReceived(Request request, Response response) {
+				NotifcationService.showNotification("Playlist saved successful.");
+			}
+		}));
 	}
 
 	public void createNewPlaylist(String name) {

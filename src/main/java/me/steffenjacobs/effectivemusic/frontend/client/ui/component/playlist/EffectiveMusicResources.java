@@ -70,5 +70,7 @@ public class EffectiveMusicResources {
 		String smallButton();
 		
 		String spacerLine();
+
+		String infoPopup();
 	}
 }
