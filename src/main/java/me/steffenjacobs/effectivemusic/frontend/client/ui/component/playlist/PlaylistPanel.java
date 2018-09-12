@@ -1,7 +1,6 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -21,6 +20,8 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.FormattingUtils;
+import me.steffenjacobs.effectivemusic.frontend.client.ui.component.editable.InlineEditTextbox;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistImpl;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackWithPathImpl;
 
 /** @author Steffen Jacobs */
@@ -41,7 +42,13 @@ public class PlaylistPanel extends Composite {
 	Button storePlaylistUi;
 
 	@UiField
+	Button newPlaylistUi;
+
+	@UiField
 	DivElement playlistHeaderUi;
+
+	@UiField
+	InlineEditTextbox playlistNameUi;
 
 	private FlowPanel currentlyPlayingPanel;
 	private Map<Integer, FlowPanel> playlistElements;
@@ -51,6 +58,11 @@ public class PlaylistPanel extends Composite {
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		initWidget(uiBinder.createAndBindUi(this));
 		playlistHeaderUi.setInnerHTML("Playlist");
+
+		loadPlaylistUi.addClickHandler(event -> playlistManager.importPlaylist());
+		storePlaylistUi.addClickHandler(event -> playlistManager.storePlaylist());
+		newPlaylistUi.addClickHandler(event -> playlistManager.createNewPlaylist(""));
+		playlistNameUi.addListener(value -> playlistManager.renamePlaylist(value));
 	}
 
 	public void setCurrentlyPlaying(int index) {
@@ -62,17 +74,18 @@ public class PlaylistPanel extends Composite {
 		elem.addStyleName(EffectiveMusicResources.INSTANCE.style().playingTrack());
 	}
 
-	public void setPlaylist(List<TrackWithPathImpl> tracks) {
+	public void setPlaylist(PlaylistImpl playlist) {
 		playlistElements = new HashMap<>();
 
 		int count = 0;
-		for (TrackWithPathImpl track : tracks) {
+		for (TrackWithPathImpl track : playlist.getTracks()) {
 			final FlowPanel elem = createTrackItem(track, count);
 			panelUi.add(elem);
 			playlistElements.put(count, elem);
 			count++;
 		}
-		playlistHeaderUi.setInnerHTML("Playlist (" + FormattingUtils.formatTime(tracks.stream().collect(Collectors.summingLong(t -> t.getTrack().getLength()))) + ")");
+		playlistHeaderUi.setInnerHTML("Playlist (" + FormattingUtils.formatTime(playlist.getTracks().stream().collect(Collectors.summingLong(t -> t.getTrack().getLength()))) + ")");
+		playlistNameUi.setText(playlist.getPlaylistName());
 	}
 
 	private FlowPanel createTrackItem(TrackWithPathImpl track, int index) {

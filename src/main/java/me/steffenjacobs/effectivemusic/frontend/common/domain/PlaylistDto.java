@@ -17,4 +17,8 @@ public interface PlaylistDto {
 
 	int getCurrentIndex();
 
+	String getPlaylistName();
+	
+	void setPlaylistName(String playlistName);
+
 }
