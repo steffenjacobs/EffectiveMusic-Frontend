@@ -1,0 +1,51 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+	.important {
+		font-weight: bold;
+	}
+	
+	.inline {
+		display: inline-block
+	}
+	
+	.labelStyle {
+		word-wrap: break-word;
+		white-space: normal;
+		position: absolute;
+		right: -20px;
+		left: 0px;
+		cursor: pointer;
+		top: 0px;
+		min-width: 15px;
+		height: 20px;
+	}
+	.textboxStyle {
+		position: absolute;
+		right: -20px;
+		left: 0px;
+		top: 0px;
+	}
+	
+	.buttonStyle {
+		position: absolute;
+		right: 0px;
+		top: 0px;
+		line-height: 20px;
+		width: 20px;
+		cursor: pointer;
+		display: none;
+	}
+	
+	.parentPanel {
+		position: relative;
+		height: 20px;
+	}
+	</ui:style>
+	<g:HTMLPanel addStyleNames="{style.parentPanel}">
+		<g:Label ui:field="label" addStyleNames="{style.inline} {style.labelStyle}" />
+		<g:TextBox ui:field="textbox" addStyleNames="{style.inline} {style.textboxStyle}" />
+		<g:Label ui:field="editButton" addStyleNames="{style.buttonStyle}" />
+	</g:HTMLPanel>
+</ui:UiBinder> 
