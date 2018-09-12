@@ -64,7 +64,9 @@ public class PlaylistManager {
 	}
 
 	private void onLoadPlaylist(String selectedFile) {
-		eventBus.fireEvent(new LoadPlaylistEvent(selectedFile, new DefaultRequestCallback()));
+		if (selectedFile != null && !"".equals(selectedFile)) {
+			eventBus.fireEvent(new LoadPlaylistEvent(selectedFile, new DefaultRequestCallback()));
+		}
 	}
 
 	public void renamePlaylist(String newName) {
