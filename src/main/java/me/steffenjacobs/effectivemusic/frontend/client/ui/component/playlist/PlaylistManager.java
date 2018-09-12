@@ -32,6 +32,7 @@ public class PlaylistManager {
 	private final SimpleEventBus eventBus;
 	private int currentlyPlayed = -1;
 	private final MusicAutobeanFactory factory;
+	private boolean hasPlaylistChanged = false;
 
 	public PlaylistManager(PlaylistPanel panel, SimpleEventBus evtBus, MusicAutobeanFactory factory) {
 		this.panel = panel;
@@ -43,6 +44,10 @@ public class PlaylistManager {
 	private void refreshUi() {
 		panel.clear();
 		panel.setPlaylist(playlist);
+		hasPlaylistChanged = true;
+		if (currentlyPlayed > -1) {
+			setCurrentTrack(currentlyPlayed);
+		}
 	}
 
 	public void updatePlaylist(PlaylistImpl newPlaylist) {
@@ -54,7 +59,8 @@ public class PlaylistManager {
 	}
 
 	public void setCurrentTrack(int index) {
-		if (currentlyPlayed != index) {
+		if (currentlyPlayed != index || hasPlaylistChanged) {
+			hasPlaylistChanged = false;
 			currentlyPlayed = index;
 			panel.setCurrentlyPlaying(index);
 		}
