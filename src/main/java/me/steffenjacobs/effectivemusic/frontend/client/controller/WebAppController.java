@@ -88,7 +88,6 @@ public class WebAppController {
 	}
 
 	private void sendRequest(String uri, boolean post, RequestCallback callback) {
-		GWT.log(uri);
 		String pageBaseUrl = GWT.getHostPageBaseURL();
 		RequestBuilder builder = new RequestBuilder(RequestBuilder.POST, pageBaseUrl + "/rest/" + (post ? "post" : "get") + "?uri=" + URL.encode(uri).replace("&", "%26"));
 		builder.setHeader("Content-type", "application/x-www-form-urlencoded");
@@ -100,7 +99,7 @@ public class WebAppController {
 		try {
 			builder.send();
 		} catch (RequestException e) {
-			e.printStackTrace();
+			GWT.log("Error", e);
 			Window.alert("error = " + e.getMessage());
 		}
 	}
