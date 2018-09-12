@@ -35,6 +35,8 @@ import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlay
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshPlaylistInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.refresh.RefreshTrackInformationEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.search.SearchEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.settings.GetSettingsEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.settings.SetPlaylistLocationSettingEvent;
 
 public class WebAppController {
 
@@ -80,6 +82,9 @@ public class WebAppController {
 		eventBus.addHandler(StorePlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/save/current", true, event.getCallback()));
 		eventBus.addHandler(RenamePlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/name?name=" + event.getPlaylistName(), true, event.getCallback()));
 		eventBus.addHandler(NewPlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/create?name=" + event.getPlaylistName(), true, event.getCallback()));
+		eventBus.addHandler(GetSettingsEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/location", false, event.getCallback()));
+		eventBus.addHandler(SetPlaylistLocationSettingEvent.TYPE,
+				event -> sendRequest("http://localhost:8080/music/playlist/location?path=" + event.getPath(), true, event.getCallback()));
 
 		eventBus.addHandler(AddToPlaylistEvent.TYPE,
 				event -> sendRequest("http://localhost:8080/music/playlist/enquene?path=" + String.join("&path=", event.getPaths()), true, event.getCallback()));

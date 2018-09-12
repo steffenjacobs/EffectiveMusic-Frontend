@@ -6,6 +6,7 @@ import com.google.web.bindery.autobean.shared.AutoBeanFactory;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.LiveTrackDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlayerInformationDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistDto;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.SettingsDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackListDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.WeightedTrackDTO;
@@ -35,5 +36,7 @@ public interface MusicAutobeanFactory extends AutoBeanFactory {
 	AutoBean<WeightedTrackDTO> weightedTrackDTO();
 
 	AutoBean<IndexStatusDTO> indexStatusDTO();
+
+	AutoBean<SettingsDTO> settingsDTO();
 
 }

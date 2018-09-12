@@ -125,7 +125,7 @@ public class MainPanel extends Composite {
 		controlPanel.setEventBus(evtBus);
 		browserPanelUi.setEventBus(evtBus);
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
-		playlistManager = new PlaylistManager(playlistPanelUi, evtBus);
+		playlistManager = new PlaylistManager(playlistPanelUi, evtBus, factory);
 		startAutoUpdate();
 
 	}

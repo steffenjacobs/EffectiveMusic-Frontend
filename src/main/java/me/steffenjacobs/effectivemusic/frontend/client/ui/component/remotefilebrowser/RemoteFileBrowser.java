@@ -134,4 +134,9 @@ public class RemoteFileBrowser extends Composite {
 		}
 	}
 
+	public void setPath(String path) {
+		if (path != null) {
+			updatePath(path);
+		}
+	}
 }

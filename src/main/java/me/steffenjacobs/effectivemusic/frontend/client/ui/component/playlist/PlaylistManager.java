@@ -3,16 +3,23 @@ package me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist;
 import java.util.Arrays;
 
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.http.client.Request;
+import com.google.gwt.http.client.Response;
+import com.google.web.bindery.autobean.shared.AutoBean;
+import com.google.web.bindery.autobean.shared.AutoBeanCodex;
 
+import me.steffenjacobs.effectivemusic.frontend.client.controller.MusicAutobeanFactory;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.GotoPlaylistPositionEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.LoadPlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.NewPlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.RemoveFromPlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.RenamePlaylistEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.StorePlaylistEvent;
+import me.steffenjacobs.effectivemusic.frontend.client.event.settings.GetSettingsEvent;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.DefaultRequestCallback;
 import me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefilebrowser.RemoteFileBrowserDialog;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.PlaylistImpl;
+import me.steffenjacobs.effectivemusic.frontend.common.domain.SettingsDTO;
 import me.steffenjacobs.effectivemusic.frontend.common.domain.TrackWithPathImpl;
 
 /** @author Steffen Jacobs */
@@ -23,10 +30,12 @@ public class PlaylistManager {
 	private final PlaylistPanel panel;
 	private final SimpleEventBus eventBus;
 	private int currentlyPlayed = -1;
+	private final MusicAutobeanFactory factory;
 
-	public PlaylistManager(PlaylistPanel panel, SimpleEventBus evtBus) {
+	public PlaylistManager(PlaylistPanel panel, SimpleEventBus evtBus, MusicAutobeanFactory factory) {
 		this.panel = panel;
 		this.eventBus = evtBus;
+		this.factory = factory;
 		panel.setManager(this);
 	}
 
@@ -60,7 +69,14 @@ public class PlaylistManager {
 	}
 
 	public void importPlaylist() {
-		new RemoteFileBrowserDialog(this::onLoadPlaylist, eventBus, true);
+		eventBus.fireEvent(new GetSettingsEvent(new DefaultRequestCallback() {
+			@Override
+			public void onResponseReceived(Request request, Response response) {
+				AutoBean<SettingsDTO> bean = AutoBeanCodex.decode(factory, SettingsDTO.class, response.getText());
+				final SettingsDTO dto = bean.as();
+				new RemoteFileBrowserDialog(PlaylistManager.this::onLoadPlaylist, eventBus, true, dto.getPlaylistLocation());
+			}
+		}));
 	}
 
 	private void onLoadPlaylist(String selectedFile) {

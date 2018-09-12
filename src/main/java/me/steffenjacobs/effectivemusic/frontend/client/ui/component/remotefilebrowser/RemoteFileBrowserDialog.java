@@ -2,8 +2,6 @@ package me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefileb
 
 import java.util.function.Consumer;
 
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -17,27 +15,25 @@ import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.Eff
 public class RemoteFileBrowserDialog extends DialogBox {
 
 	public RemoteFileBrowserDialog(final Consumer<String> consumer, final SimpleEventBus eventBus, boolean fileChooser) {
+		this(consumer, eventBus, fileChooser, null);
+	}
+
+	public RemoteFileBrowserDialog(final Consumer<String> consumer, final SimpleEventBus eventBus, boolean fileChooser, String initialPath) {
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
 		super.setText("Choose a " + (fileChooser ? "file" : "directory"));
 
 		final RemoteFileBrowser remoteFileBrowser = new RemoteFileBrowser(fileChooser);
 
 		Button cancelButton = new Button("Cancel");
-		cancelButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				consumer.accept(null);
-				RemoteFileBrowserDialog.super.hide();
-			}
+		cancelButton.addClickHandler(event -> {
+			consumer.accept(null);
+			RemoteFileBrowserDialog.super.hide();
 		});
 
 		Button okButton = new Button("OK");
-		okButton.addClickHandler(new ClickHandler() {
-			@Override
-			public void onClick(ClickEvent event) {
-				RemoteFileBrowserDialog.super.hide();
-				consumer.accept(remoteFileBrowser.getPath());
-			}
+		okButton.addClickHandler(event -> {
+			RemoteFileBrowserDialog.super.hide();
+			consumer.accept(remoteFileBrowser.getPath());
 		});
 
 		okButton.addStyleName(EffectiveMusicResources.INSTANCE.style().sendButton());
@@ -52,6 +48,7 @@ public class RemoteFileBrowserDialog extends DialogBox {
 		panel.setSpacing(10);
 		panel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		remoteFileBrowser.setEventBus(eventBus);
+		remoteFileBrowser.setPath(initialPath);
 		panel.add(remoteFileBrowser);
 
 		FlowPanel buttons = new FlowPanel();
