@@ -38,7 +38,6 @@ public class PlaylistManager {
 	}
 
 	public void updatePlaylist(PlaylistImpl newPlaylist) {
-		GWT.log(newPlaylist.getPlaylistName());
 		if (newPlaylist.equals(playlist)) {
 			return;
 		}
