@@ -1,6 +1,7 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui.component.browser;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
@@ -55,7 +56,8 @@ public class BrowserCellTable implements IsWidget {
 		final Label addToPlaylist = new Label("Add selection to Playlist");
 		addToPlaylist.addStyleName(EffectiveMusicResources.INSTANCE.style().contextMenuButton());
 		addToPlaylist.addClickHandler(e -> {
-			multiSelectionModel.getSelectedSet().forEach(t -> eventBus.fireEvent(new AddToPlaylistEvent(new String(Base64Encoder.encode(t.getPath().getBytes())), null)));
+			List<String> paths = multiSelectionModel.getSelectedSet().stream().map(t -> new String(Base64Encoder.encode(t.getPath().getBytes()))).collect(Collectors.toList());
+			eventBus.fireEvent(new AddToPlaylistEvent(paths, null));
 			popupMenu.hide();
 			multiSelectionModel.clear();
 		});

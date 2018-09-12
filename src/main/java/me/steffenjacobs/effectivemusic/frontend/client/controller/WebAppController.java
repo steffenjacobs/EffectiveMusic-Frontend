@@ -66,12 +66,16 @@ public class WebAppController {
 		eventBus.addHandler(RefreshPlayerInformationEvent.TYPE, event -> sendRequest("http://localhost:8080/music/player", false, event.getCallback()));
 		eventBus.addHandler(BrowseFileEvent.TYPE, event -> sendRequest("http://localhost:8081/files/browse?path=" + event.getPath(), true, event.getCallback()));
 		eventBus.addHandler(SearchEvent.TYPE, event -> sendRequest("http://localhost:8081/files/search/weighted?search=" + event.getSearchText(), false, event.getCallback()));
-		eventBus.addHandler(AddToPlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/enquene?path=" + event.getPath(), true, event.getCallback()));
 		eventBus.addHandler(GotoPlaylistPositionEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/position?position=" + event.getPosition(), true));
 		eventBus.addHandler(PlaylistLoopRepeatEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/loop?value=" + event.getLoopRepeatStatus(), true));
 		eventBus.addHandler(MuteEvent.TYPE, event -> sendRequest("http://localhost:8080/music/mute?mute=" + event.isMute(), true));
 		eventBus.addHandler(GetLibraryImportStatusEvent.TYPE, event -> sendRequest("http://localhost:8081/files/index/status", false, event.getCallback()));
 		eventBus.addHandler(StartLibraryImportEvent.TYPE, event -> sendRequest("http://localhost:8081/files/index?path=" + event.getPath(), true, event.getCallback()));
+
+		eventBus.addHandler(AddToPlaylistEvent.TYPE, event -> {
+			final String uri = "http://localhost:8080/music/playlist/enquene?path=";
+			sendRequest(uri + String.join("&path=", event.getPaths()), true, event.getCallback());
+		});
 	}
 
 	private void sendRequest(String uri, boolean post) {

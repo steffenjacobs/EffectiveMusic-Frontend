@@ -1,5 +1,6 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui.component.controlpanel;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -221,7 +222,7 @@ public class ControlPanel extends Composite {
 
 	@UiHandler("startYoutubeButton")
 	void onStartYoutubeButtonClicked(ClickEvent e) {
-		eventBus.fireEvent(new AddToPlaylistEvent(new String(Base64Encoder.encode(textBox.getText().getBytes())), null));
+		eventBus.fireEvent(new AddToPlaylistEvent(Arrays.asList(new String(Base64Encoder.encode(textBox.getText().getBytes()))), null));
 	}
 
 	@UiHandler("nextButton")
