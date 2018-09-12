@@ -13,13 +13,13 @@
 				<div style="font-weight: 700;display:inline-block;" ui:field="playlistHeaderUi" />
 				<c:editable.InlineEditTextbox ui:field="playlistNameUi" />
 				<g:Button
-					styleName="{res.style.sendButton} {res.style.secondColorInverted} {res.style.smallButton} {res.style.fontSize17}"
+					styleName="{res.style.sendButton} {res.style.secondColorInverted} {res.style.smallButton} {res.style.margin6pxBottomHover} {res.style.fontSize17}"
 					ui:field="loadPlaylistUi" title="Load Playlist">⤒</g:Button>
 				<g:Button
-					styleName="{res.style.sendButton} {res.style.secondColorInverted} {res.style.smallButton} {res.style.fontSize17}"
+					styleName="{res.style.sendButton} {res.style.secondColorInverted} {res.style.smallButton} {res.style.margin6pxBottomHover} {res.style.fontSize17}"
 					ui:field="storePlaylistUi" title="Save Playlist">⤓</g:Button>
 				<g:Button
-					styleName="{res.style.sendButton} {res.style.secondColorInverted} {res.style.smallButton} {res.style.fontSize17}"
+					styleName="{res.style.sendButton} {res.style.secondColorInverted} {res.style.smallButton} {res.style.margin6pxBottomHover} {res.style.fontSize17}"
 					ui:field="newPlaylistUi" title="Create Playlist">+</g:Button>
 			</div>
 			<div class="{res.style.spacerLine}" />
