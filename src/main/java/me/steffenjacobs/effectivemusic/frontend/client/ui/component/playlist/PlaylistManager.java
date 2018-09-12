@@ -2,7 +2,6 @@ package me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist;
 
 import java.util.Arrays;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
 
 import me.steffenjacobs.effectivemusic.frontend.client.event.playlist.GotoPlaylistPositionEvent;
@@ -32,7 +31,6 @@ public class PlaylistManager {
 	}
 
 	private void refreshUi() {
-		GWT.log("in-refresh");
 		panel.clear();
 		panel.setPlaylist(playlist);
 	}
@@ -62,7 +60,7 @@ public class PlaylistManager {
 	}
 
 	public void importPlaylist() {
-		new RemoteFileBrowserDialog(this::onLoadPlaylist, eventBus);
+		new RemoteFileBrowserDialog(this::onLoadPlaylist, eventBus, true);
 	}
 
 	private void onLoadPlaylist(String selectedFile) {

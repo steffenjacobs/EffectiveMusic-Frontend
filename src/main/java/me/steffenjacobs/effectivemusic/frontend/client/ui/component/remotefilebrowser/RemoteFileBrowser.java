@@ -1,6 +1,8 @@
 package me.steffenjacobs.effectivemusic.frontend.client.ui.component.remotefilebrowser;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.SpanElement;
+import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -44,10 +46,23 @@ public class RemoteFileBrowser extends Composite {
 	@UiField
 	FlowPanel fileListUi;
 
+	@UiField
+	TextBox fileNameUi;
+
+	@UiField
+	SpanElement spanFileUi;
+
 	private SimpleEventBus eventBus;
 
-	public RemoteFileBrowser() {
+	private final boolean fileChooser;
+
+	public RemoteFileBrowser(boolean fileChooser) {
+		this.fileChooser = fileChooser;
 		initWidget(uiBinder.createAndBindUi(this));
+		if (fileChooser) {
+			fileNameUi.setVisible(true);
+			spanFileUi.getStyle().setDisplay(Display.INITIAL);
+		}
 	}
 
 	public void setEventBus(SimpleEventBus evtBus) {
@@ -82,7 +97,7 @@ public class RemoteFileBrowser extends Composite {
 	}
 
 	public String getPath() {
-		return browsePathUi.getText();
+		return browsePathUi.getText() + (fileChooser ? "/" + fileNameUi.getText() : "");
 	}
 
 	private void updateList(BrowseResult result) {
@@ -108,7 +123,12 @@ public class RemoteFileBrowser extends Composite {
 				lab.addClickHandler(e -> updatePath(file.getAbsolutePath()));
 				lab.addStyleName(EffectiveMusicResources.INSTANCE.style().fileBrowserItem());
 			} else {
-				lab.addStyleName(EffectiveMusicResources.INSTANCE.style().fileBrowserItemNonClickable());
+				if (fileChooser) {
+					lab.addClickHandler(e -> fileNameUi.setText(file.getName()));
+					lab.addStyleName(EffectiveMusicResources.INSTANCE.style().fileBrowserItem());
+				} else {
+					lab.addStyleName(EffectiveMusicResources.INSTANCE.style().fileBrowserItemNonClickable());
+				}
 			}
 			fileListUi.add(lab);
 		}

@@ -16,11 +16,11 @@ import me.steffenjacobs.effectivemusic.frontend.client.ui.component.playlist.Eff
 /** @author Steffen Jacobs */
 public class RemoteFileBrowserDialog extends DialogBox {
 
-	public RemoteFileBrowserDialog(final Consumer<String> consumer, final SimpleEventBus eventBus) {
+	public RemoteFileBrowserDialog(final Consumer<String> consumer, final SimpleEventBus eventBus, boolean fileChooser) {
 		EffectiveMusicResources.INSTANCE.style().ensureInjected();
-		super.setText("Choose a directory");
+		super.setText("Choose a " + (fileChooser ? "file" : "directory"));
 
-		final RemoteFileBrowser remoteFileBrowser = new RemoteFileBrowser();
+		final RemoteFileBrowser remoteFileBrowser = new RemoteFileBrowser(fileChooser);
 
 		Button cancelButton = new Button("Cancel");
 		cancelButton.addClickHandler(new ClickHandler() {
@@ -69,7 +69,7 @@ public class RemoteFileBrowserDialog extends DialogBox {
 		super.setAnimationType(AnimationType.ROLL_DOWN);
 		super.setStyleName("style_dialog");
 
-		 super.setGlassEnabled(true);
+		super.setGlassEnabled(true);
 
 		super.center();
 		super.show();

@@ -17,12 +17,20 @@
 		max-width: 40em;
 		background: #c2c8d6;
 	}
+	
+	.fileName {
+		display: block;
+		padding: 0.5em;
+		width: 100%;
+	}
 	</ui:style>
 
 	<g:HTMLPanel>
 		<g:TextBox ui:field="browsePathUi" />
 		<g:Button styleName="{style.important}" ui:field="browseButtonUi"
 			text="Browse" />
+		<span ui:field="spanFileUi" style="display: none;">File: </span>
+		<g:TextBox ui:field="fileNameUi" visible="false" />
 		<g:ScrollPanel addStyleNames="{style.scrollPanel}">
 			<g:FlowPanel ui:field="fileListUi" addStyleNames="{style.fileListUi}" />
 		</g:ScrollPanel>

@@ -159,6 +159,6 @@ public class BrowserPanel extends Composite {
 					}
 				}));
 			}
-		}, eventBus);
+		}, eventBus, false);
 	}
 }
