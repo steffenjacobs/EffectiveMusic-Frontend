@@ -82,7 +82,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<runTarget>GwtWebApp.html</runTarget>
+					<runTarget>EffectiveMusic.html</runTarget>
 					<hostedWebapp>${outputFolder}</hostedWebapp>
 					<webappDirectory>${outputFolder}</webappDirectory>
 				</configuration>

@@ -12,7 +12,7 @@ import me.steffenjacobs.effectivemusic.frontend.client.ui.MainPanel;
  * 
  * Point d'entrée du module GWT
  */
-public class GwtWebApp implements EntryPoint {
+public class EffectiveMusicApp implements EntryPoint {
 
 	/**
 	 * gin injector

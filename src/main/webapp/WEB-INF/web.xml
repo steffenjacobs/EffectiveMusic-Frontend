@@ -24,6 +24,6 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
   </servlet-mapping>
 
   <welcome-file-list>
-  	<welcome-file>/GwtWebApp.html</welcome-file>
+  	<welcome-file>/EffectiveMusic.html</welcome-file>
   </welcome-file-list>
 </web-app>

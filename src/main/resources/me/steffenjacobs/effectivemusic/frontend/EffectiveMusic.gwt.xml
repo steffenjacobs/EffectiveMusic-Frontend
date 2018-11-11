@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module rename-to='gwtwebapp'>
+<module rename-to='effectivemusic'>
 	<!-- Inherit the core Web Toolkit stuff. -->
 	<inherits name='com.google.gwt.user.User' />
 
@@ -22,7 +22,7 @@
 	<inherits name="com.google.web.bindery.autobean.AutoBean" />
 
 	<entry-point
-		class='me.steffenjacobs.effectivemusic.frontend.client.GwtWebApp' />
+		class='me.steffenjacobs.effectivemusic.frontend.client.EffectiveMusicApp' />
 
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />

@@ -42,6 +42,9 @@ public class WebAppController {
 
 	private SimpleEventBus eventBus;
 
+	private static final String URL_MUSIC_SERVER = "http://localhost:8180/music";
+	private static final String URL_FILE_SERVER = "http://localhost:8181/files";
+
 	private static final RequestCallback DEFAULT_CALLBACK = new RequestCallback() {
 		public void onError(Request request, Throwable e) {
 			Window.alert("error = " + e.getMessage());
@@ -59,36 +62,34 @@ public class WebAppController {
 	}
 
 	public void bindHandlers() {
-		eventBus.addHandler(StopMusicEvent.TYPE, (event) -> sendRequest("http://localhost:8080/music/stop", true, event.getCallback()));
-		eventBus.addHandler(StartMusicEvent.TYPE, (event) -> sendRequest("http://localhost:8080/music/play?path=" + event.getPath(), true, event.getCallback()));
-		eventBus.addHandler(PauseMusicEvent.TYPE, (event) -> sendRequest("http://localhost:8080/music/pause", true, event.getCallback()));
-		eventBus.addHandler(ResumeMusicEvent.TYPE, (event) -> sendRequest("http://localhost:8080/music/resume", true, event.getCallback()));
-		eventBus.addHandler(PreviousEvent.TYPE, () -> sendRequest("http://localhost:8080/music/playlist/previous", true));
-		eventBus.addHandler(NextEvent.TYPE, () -> sendRequest("http://localhost:8080/music/playlist/next", true));
-		eventBus.addHandler(RefreshTrackInformationEvent.TYPE, event -> sendRequest("http://localhost:8080/music/live_info", false, event.getCallback()));
-		eventBus.addHandler(TrackPositionChangeEvent.TYPE,
-				event -> sendRequest("http://localhost:8080/music/position?position=" + event.getPosition() / 100, true, event.getCallback()));
-		eventBus.addHandler(VolumeChangeEvent.TYPE, event -> sendRequest("http://localhost:8080/music/gain?gain=" + event.getVolume(), true, event.getCallback()));
-		eventBus.addHandler(RefreshPlaylistInformationEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist", false, event.getCallback()));
-		eventBus.addHandler(RefreshPlayerInformationEvent.TYPE, event -> sendRequest("http://localhost:8080/music/player", false, event.getCallback()));
-		eventBus.addHandler(BrowseFileEvent.TYPE, event -> sendRequest("http://localhost:8081/files/browse?path=" + event.getPath(), true, event.getCallback()));
-		eventBus.addHandler(SearchEvent.TYPE, event -> sendRequest("http://localhost:8081/files/search/weighted?search=" + event.getSearchText(), false, event.getCallback()));
-		eventBus.addHandler(GotoPlaylistPositionEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/position?position=" + event.getPosition(), true));
-		eventBus.addHandler(PlaylistLoopRepeatEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/loop?value=" + event.getLoopRepeatStatus(), true));
-		eventBus.addHandler(MuteEvent.TYPE, event -> sendRequest("http://localhost:8080/music/mute?mute=" + event.isMute(), true));
-		eventBus.addHandler(GetLibraryImportStatusEvent.TYPE, event -> sendRequest("http://localhost:8081/files/index/status", false, event.getCallback()));
-		eventBus.addHandler(StartLibraryImportEvent.TYPE, event -> sendRequest("http://localhost:8081/files/index?path=" + event.getPath(), true, event.getCallback()));
-		eventBus.addHandler(LoadPlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/load?path=" + event.getPath(), true, event.getCallback()));
-		eventBus.addHandler(StorePlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/save/current", true, event.getCallback()));
-		eventBus.addHandler(RenamePlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/name?name=" + event.getPlaylistName(), true, event.getCallback()));
-		eventBus.addHandler(NewPlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/create?name=" + event.getPlaylistName(), true, event.getCallback()));
-		eventBus.addHandler(GetSettingsEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/location", false, event.getCallback()));
-		eventBus.addHandler(SetPlaylistLocationSettingEvent.TYPE,
-				event -> sendRequest("http://localhost:8080/music/playlist/location?path=" + event.getPath(), true, event.getCallback()));
+		eventBus.addHandler(StopMusicEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/stop", true, event.getCallback()));
+		eventBus.addHandler(StartMusicEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/play?path=" + event.getPath(), true, event.getCallback()));
+		eventBus.addHandler(PauseMusicEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/pause", true, event.getCallback()));
+		eventBus.addHandler(ResumeMusicEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/resume", true, event.getCallback()));
+		eventBus.addHandler(PreviousEvent.TYPE, () -> sendRequest(URL_MUSIC_SERVER + "/playlist/previous", true));
+		eventBus.addHandler(NextEvent.TYPE, () -> sendRequest(URL_MUSIC_SERVER + "/playlist/next", true));
+		eventBus.addHandler(RefreshTrackInformationEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/live_info", false, event.getCallback()));
+		eventBus.addHandler(TrackPositionChangeEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/position?position=" + event.getPosition() / 100, true, event.getCallback()));
+		eventBus.addHandler(VolumeChangeEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/gain?gain=" + event.getVolume(), true, event.getCallback()));
+		eventBus.addHandler(RefreshPlaylistInformationEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/playlist", false, event.getCallback()));
+		eventBus.addHandler(RefreshPlayerInformationEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/player", false, event.getCallback()));
+		eventBus.addHandler(BrowseFileEvent.TYPE, event -> sendRequest(URL_FILE_SERVER + "/browse?path=" + event.getPath(), true, event.getCallback()));
+		eventBus.addHandler(SearchEvent.TYPE, event -> sendRequest(URL_FILE_SERVER + "/search/weighted?search=" + event.getSearchText(), false, event.getCallback()));
+		eventBus.addHandler(GotoPlaylistPositionEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/playlist/position?position=" + event.getPosition(), true));
+		eventBus.addHandler(PlaylistLoopRepeatEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/playlist/loop?value=" + event.getLoopRepeatStatus(), true));
+		eventBus.addHandler(MuteEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/mute?mute=" + event.isMute(), true));
+		eventBus.addHandler(GetLibraryImportStatusEvent.TYPE, event -> sendRequest(URL_FILE_SERVER + "/index/status", false, event.getCallback()));
+		eventBus.addHandler(StartLibraryImportEvent.TYPE, event -> sendRequest(URL_FILE_SERVER + "/index?path=" + event.getPath(), true, event.getCallback()));
+		eventBus.addHandler(LoadPlaylistEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/playlist/load?path=" + event.getPath(), true, event.getCallback()));
+		eventBus.addHandler(StorePlaylistEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/playlist/save/current", true, event.getCallback()));
+		eventBus.addHandler(RenamePlaylistEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/playlist/name?name=" + event.getPlaylistName(), true, event.getCallback()));
+		eventBus.addHandler(NewPlaylistEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/playlist/create?name=" + event.getPlaylistName(), true, event.getCallback()));
+		eventBus.addHandler(GetSettingsEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/playlist/location", false, event.getCallback()));
+		eventBus.addHandler(SetPlaylistLocationSettingEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/playlist/location?path=" + event.getPath(), true, event.getCallback()));
 
 		eventBus.addHandler(AddToPlaylistEvent.TYPE,
-				event -> sendRequest("http://localhost:8080/music/playlist/enquene?path=" + String.join("&path=", event.getPaths()), true, event.getCallback()));
-		eventBus.addHandler(RemoveFromPlaylistEvent.TYPE, event -> sendRequest("http://localhost:8080/music/playlist/dequene?index=" + event.getIndicesAsQueryString(), true));
+				event -> sendRequest(URL_MUSIC_SERVER + "/playlist/enquene?path=" + String.join("&path=", event.getPaths()), true, event.getCallback()));
+		eventBus.addHandler(RemoveFromPlaylistEvent.TYPE, event -> sendRequest(URL_MUSIC_SERVER + "/playlist/dequene?index=" + event.getIndicesAsQueryString(), true));
 	}
 
 	private void sendRequest(String uri, boolean post) {
