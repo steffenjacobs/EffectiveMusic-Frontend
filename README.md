@@ -5,10 +5,10 @@ A GWT Web-Frontend for https://github.com/steffenjacobs/EffectiveMusic
 -> A browser-based Media Player to remote control your Stereo System
 
 -> Full Audio Library Control  
-* Searchearble Library  
+* Searchable Library (weighted search that takes bitrate, # played and import date into account)  
 * Add Media Tracks to Library  
 * Import Music YouTube into Library  
-* Import new Tracks to Library  
+* Import new Tracks from disk or network drive into Library  
 
 -> A fully-fledged Audio Player  
 * Play Tracks from your Library  
