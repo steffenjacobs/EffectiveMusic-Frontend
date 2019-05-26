@@ -19,4 +19,10 @@ A GWT Web-Frontend for https://github.com/steffenjacobs/EffectiveMusic
 * Add and Remove Tracks to and from Playlists  
 * Load and Store Playlists in common M3U format  
 
+# Screenshot
 <img src="./EffectiveMusic.jpg" />
+
+
+# Schematic
+
+<img src="./graphic.jpg" />
